@@ -15,3 +15,4 @@ struct fiche_technique_cuisineApp: App {
         }
     }
 }
+

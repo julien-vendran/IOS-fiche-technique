@@ -17,6 +17,9 @@
 		6FC966CF27B54BA5006C33B4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966A527B54BA4006C33B4 /* ContentView.swift */; };
 		6FC966D027B54BA5006C33B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FC966A627B54BA5006C33B4 /* Assets.xcassets */; };
 		6FC966D127B54BA5006C33B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FC966A627B54BA5006C33B4 /* Assets.xcassets */; };
+		6FC966E227BBE74B006C33B4 /* allergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966E127BBE74B006C33B4 /* allergen.swift */; };
+		6FC966E427BBF6A2006C33B4 /* cost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966E327BBF6A2006C33B4 /* cost.swift */; };
+		6FC966E627BBF819006C33B4 /* ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966E527BBF819006C33B4 /* ingredient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		6FC966C427B54BA5006C33B4 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FC966C827B54BA5006C33B4 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		6FC966CA27B54BA5006C33B4 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		6FC966E127BBE74B006C33B4 /* allergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allergen.swift; sourceTree = "<group>"; };
+		6FC966E327BBF6A2006C33B4 /* cost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cost.swift; sourceTree = "<group>"; };
+		6FC966E527BBF819006C33B4 /* ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ingredient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,7 @@
 		6FC966A327B54BA4006C33B4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6FC966E027BBE71C006C33B4 /* Model */,
 				6FC966A427B54BA4006C33B4 /* fiche_technique_cuisineApp.swift */,
 				6FC966A527B54BA4006C33B4 /* ContentView.swift */,
 				6FC966A627B54BA5006C33B4 /* Assets.xcassets */,
@@ -139,6 +146,16 @@
 				6FC966CA27B54BA5006C33B4 /* Tests_macOSLaunchTests.swift */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		6FC966E027BBE71C006C33B4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6FC966E127BBE74B006C33B4 /* allergen.swift */,
+				6FC966E327BBF6A2006C33B4 /* cost.swift */,
+				6FC966E527BBF819006C33B4 /* ingredient.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +318,9 @@
 			files = (
 				6FC966CE27B54BA5006C33B4 /* ContentView.swift in Sources */,
 				6FC966CC27B54BA5006C33B4 /* fiche_technique_cuisineApp.swift in Sources */,
+				6FC966E627BBF819006C33B4 /* ingredient.swift in Sources */,
+				6FC966E427BBF6A2006C33B4 /* cost.swift in Sources */,
+				6FC966E227BBE74B006C33B4 /* allergen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
