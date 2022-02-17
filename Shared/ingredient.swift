@@ -7,29 +7,29 @@
 
 import Foundation
 class Ingredient {
-    var id: Int
+    var id: Int?
     var name: String
     var unit: String
-    var availableQuantity: Int?
-    var unitPrice: Int?
-    var associatedAllergen: Allergen[]
-    var denreeUsed: Denree? // Il sert à quoi ça ????? TODO
+    var availableQuantity: Int
+    var unitPrice: Double
+    var associatedAllergen: [Allergen]
+    var denreeUsed: [Denree] // Il sert à quoi ????? TODO
 
-    constructor(
-        name: String?,
-        unit: String?,
-        availableQuantity: Int?,
-        unitPrice: Int?,
-        associatedAllergen: Allergen[]?,
-        denreeUsed: Denree?,
+    init (
+        name: String,
+        unit: String,
+        availableQuantity: Int,
+        unitPrice: Double,
+        associatedAllergen: [Allergen],
+        denreeUsed: [Denree],
         id: Int? 
     ) {
         self.id = id
-        self.name = name ? name : ""
-        self.unit = unit ? unit : ""
-        self.availableQuantity = availableQuantity ? availableQuantity : nil
-        self.unitPrice = unitPrice ? unitPrice : nil
-        self.associatedAllergen = associatedAllergen ? associatedAllergen : []
-        self.denreeUsed = denreeUsed ? denreeUsed : nil
+        self.name = name
+        self.unit = unit
+        self.availableQuantity = availableQuantity
+        self.unitPrice = unitPrice
+        self.associatedAllergen = associatedAllergen
+        self.denreeUsed = denreeUsed
     }
 }

@@ -1,0 +1,63 @@
+//
+//  listIngredient.swift
+//  fiche-technique-cuisine (iOS)
+//
+//  Created by m1 on 16/02/2022.
+//
+
+import SwiftUI
+
+struct listIngredient: View {
+    @State var ingredients : [Ingredient]
+    
+    init(){
+        self.ingredients=[]
+    }
+    var body: some View {
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(0..<ingredients.count, id: \.self) { index in
+                        NavigationLink(destination: ReadIngredient(ingredient: self.ingredients[index])) {
+                            Text(self.ingredients[index].name)
+                        }.navigationTitle("Liste ingrédients")
+                    }
+                    .onDelete{indexSet in
+                        ingredients.remove(atOffsets: indexSet)
+                    }
+                    .onMove{ indexSet, index in
+                        ingredients.move(fromOffsets: indexSet, toOffset: index)
+                    }
+                    
+                }
+                EditButton()
+            }
+        } .task {
+            
+            let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/ingredients")
+            do{
+                
+                //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul !
+             let decoded : [IngredientDTO] = try await URLSession.shared.getJSON(from: url!)
+            
+            //Pour chaque element dto on converti, compactMap =map mais plus simple
+                let maliste : [Ingredient] = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
+                    return dto.ingredient
+                }
+                self.ingredients = maliste
+                
+            }catch let error {
+                    print(error.localizedDescription)
+                
+            }
+        }
+       
+            
+    }
+}
+
+struct listIngredient_Previews: PreviewProvider {
+    static var previews: some View {
+        listIngredient()
+    }
+}

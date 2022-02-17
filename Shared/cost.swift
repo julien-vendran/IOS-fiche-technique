@@ -8,28 +8,31 @@
 import Foundation
 class Cost {
 
-    var coutDesMatiere: Int
-    var coutAssaisonnement: Int
-    var coutDesCharges: Int
-    var coutDesFluides: Int
-    var coutDePersonnel: Int
-    var coutDeProduction: Int
-    var prixDeVente: Int
-    var beneficeParPortion: Int
-    var seuilDeRentabilite: Int
+    var coutDesMatiere: Double
+    var coutAssaisonnement: Double
+    var coutDesCharges: Double
+    var coutDesFluides: Double
+    var coutDePersonnel: Double
+    var coutDeProduction: Double
+    var prixDeVente: Double {
+        return self.coutDeProduction * 2.0
+    }
+    var beneficeParPortion: Double {
+        return self.prixDeVente / 10
+    }
+    var seuilDeRentabilite: Double = 1.0
 
     init (
-        coutDesMatiere: Int,
-        coutDesFluides: Int,
-        coutDePersonnel: Int,
-        coutAssaisonnement: Int?,
+        coutDesMatiere: Double,
+        coutDesFluides: Double,
+        coutDePersonnel: Double,
+        coutAssaisonnement: Double?
     ) {
         self.coutDesMatiere = coutDesMatiere
-        self.coutAssaisonnement = coutAssaisonnement ? coutAssaisonnement : coutDesMatiere * 0.05
+        self.coutAssaisonnement = (coutAssaisonnement != nil) ? coutAssaisonnement! : Double(coutDesMatiere) * 0.05
         self.coutDesFluides = coutDesFluides
         self.coutDePersonnel = coutDePersonnel
         self.coutDesCharges = coutDesFluides + coutDePersonnel
-        self.coutDeProduction = coutDesMatiere + self.coutDesCharges +self.coutAssaisonnement
-        self.prixDeVente = self.coutDeProduction * 2
+        self.coutDeProduction = coutDesMatiere+(self.coutDesCharges+self.coutAssaisonnement)
     }
 }

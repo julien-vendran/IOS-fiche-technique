@@ -9,10 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Spacer()
-          Text("Coucou juju  !")
-            Spacer()
+        NavigationView {
+            Form {
+                Section {
+                    
+                    NavigationLink(destination: listIngredient()) {
+                        Text("Liste des ingrédients")
+                    }.navigationTitle("")
+                }
+            }
+            .navigationTitle("Les totos")
         }
     }
 }
