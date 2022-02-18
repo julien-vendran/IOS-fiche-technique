@@ -9,6 +9,7 @@ import SwiftUI
 
 struct listIngredient: View {
     @State var ingredients : [Ingredient]
+    @State var showingSheet: Bool = false
     
     init(){
         self.ingredients=[]
@@ -18,9 +19,17 @@ struct listIngredient: View {
             VStack {
                 List {
                     ForEach(0..<ingredients.count, id: \.self) { index in
-                        NavigationLink(destination: ReadIngredient(ingredient: self.ingredients[index])) {
+                        Group {
+                            Button("\(self.ingredients[index].name	)") {
+                                        showingSheet.toggle()
+                                    }
+                                    .sheet(isPresented: $showingSheet) {
+                                        ReadIngredient(ingredient: self.ingredients[index])
+                                    }
+                        }
+                        /*NavigationLink(destination: ReadIngredient(ingredient: self.ingredients[index])) {
                             Text(self.ingredients[index].name)
-                        }.navigationTitle("Liste ingrédients")
+                        }.navigationTitle("Liste ingrédients")*/
                     }
                     .onDelete{indexSet in
                         ingredients.remove(atOffsets: indexSet)
@@ -37,7 +46,7 @@ struct listIngredient: View {
             let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/ingredients")
             do{
                 
-                //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul !
+                //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
              let decoded : [IngredientDTO] = try await URLSession.shared.getJSON(from: url!)
             
             //Pour chaque element dto on converti, compactMap =map mais plus simple

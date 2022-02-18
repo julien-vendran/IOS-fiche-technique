@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReadIngredient: View {
     @State var ingredient: Ingredient
-    
+    	
     init (ingredient : Ingredient) {
         self.ingredient = ingredient
     }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct AllergenDTO : Codable{
+struct AllergenDTO : Codable {
     
 }
