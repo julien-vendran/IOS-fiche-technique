@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class Ingredient {
+class Ingredient :Identifiable {
     var id: Int?
     var name: String
     var unit: String

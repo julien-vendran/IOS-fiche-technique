@@ -14,7 +14,7 @@ struct imgDTO :Codable {
 }
         
 struct ContentDTO : Codable{
-    var urls : UrlDTO
+    var urls : UrlDTO?
 }
 
 struct UrlDTO : Codable{

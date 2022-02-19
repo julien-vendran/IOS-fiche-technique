@@ -10,6 +10,7 @@ import SwiftUI
 struct listIngredient: View {
     @State var ingredients : [Ingredient]
     @State var showingSheet: Bool = false
+    @State var currentIngredient : Ingredient? = nil
     
     init(){
         self.ingredients=[]
@@ -20,11 +21,8 @@ struct listIngredient: View {
                 List {
                     ForEach(0..<ingredients.count, id: \.self) { index in
                         Group {
-                            Button("\(self.ingredients[index].name	)") {
-                                        showingSheet.toggle()
-                                    }
-                                    .sheet(isPresented: $showingSheet) {
-                                        ReadIngredient(ingredient: self.ingredients[index])
+                            Button("\(self.ingredients[index].name)") {
+                                self.currentIngredient = self.ingredients[index]
                                     }
                         }
                         /*NavigationLink(destination: ReadIngredient(ingredient: self.ingredients[index])) {
@@ -38,6 +36,8 @@ struct listIngredient: View {
                         ingredients.move(fromOffsets: indexSet, toOffset: index)
                     }
                     
+                }.sheet(item: $currentIngredient) { ing in
+                    ReadIngredient(ingredient: ing)
                 }
                 EditButton()
             }

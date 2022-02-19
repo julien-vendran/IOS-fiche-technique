@@ -19,7 +19,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Les totos")
-        }
+        }.navigationViewStyle(StackNavigationViewStyle()) //Corrige les erreurs console du demarage
     }
 }
 
