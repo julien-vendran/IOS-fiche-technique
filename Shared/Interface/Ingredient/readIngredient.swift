@@ -9,18 +9,39 @@ import SwiftUI
 
 struct ReadIngredient: View {
     @State var ingredient: Ingredient
-    	
+    @State var url: String
     init (ingredient : Ingredient) {
         self.ingredient = ingredient
+        self.url = ""
+       
     }
     var body: some View {
         VStack {
+            AsyncImage(url: URL(string: self.url))
             Text("Nom :"); Text("\(ingredient.name)")
             Text("Unité :"); Text("\(ingredient.unit)")
             Text("Quantité disponible"); Text("\(ingredient.availableQuantity)")
             Text("Prix unitaire"); Text("\(ingredient.unitPrice)")
         }
         .navigationTitle("\(ingredient.name)")
+        .task {
+                var urlData: URL? = URL(string: "https://api.unsplash.com/search/photos?page=1&query=\(ingredient.name)&per_page=1&client_id=p-ZL92yXYzvXKuf5exoqtIbhxEkI3iJEPFY_uucK8VI&fbclid=IwAR1KgNTMdFmu-WoNAq3rZvdH-bko9xG-BSAnsBAQNCVj9-WkXfCQ6cEOJpc")
+                if urlData==nil{
+                    urlData = URL(string: "https://api.unsplash.com/search/photos?page=1&query=oeuf&per_page=1&client_id=p-ZL92yXYzvXKuf5exoqtIbhxEkI3iJEPFY_uucK8VI&fbclid=IwAR1KgNTMdFmu-WoNAq3rZvdH-bko9xG-BSAnsBAQNCVj9-WkXfCQ6cEOJpc")
+                }
+               if let url = urlData{
+                    do{
+                   
+                    let decoded : imgDTO = try await URLSession.shared.getJSON(from: url)
+                        
+                    self.url=decoded.results[0].urls.thumb //TODO check si il y a un resultat
+                    }catch let error {
+                            print(error.localizedDescription)
+                    }
+                }
+           
+             
+        }
        
     }
 }
