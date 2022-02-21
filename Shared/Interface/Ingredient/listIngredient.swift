@@ -12,7 +12,7 @@ struct listIngredient: View {
     @State var showingSheet: Bool = false
     @State var currentIngredient : Ingredient? = nil
     
-    init(){
+    init() {
         self.ingredients=[]
     }
     var body: some View {
@@ -44,7 +44,7 @@ struct listIngredient: View {
         } .task {
             
             let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/ingredients")
-            do{
+            do {
                 
                 //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
              let decoded : [IngredientDTO] = try await URLSession.shared.getJSON(from: url!)

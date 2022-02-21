@@ -13,7 +13,7 @@ class Ingredient :Identifiable {
     var availableQuantity: Int
     var unitPrice: Double
     var associatedAllergen: [Allergen]
-    var denreeUsed: [Denree] // Il sert à quoi ????? TODO
+    var denreeUsed: [Denree] 
 
     init (
         name: String,
