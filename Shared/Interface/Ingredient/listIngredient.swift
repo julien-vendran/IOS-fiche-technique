@@ -16,8 +16,16 @@ struct listIngredient: View {
         self.ingredients=[]
     }
     var body: some View {
-        NavigationView {
+       // NavigationView {
             VStack {
+                HStack{
+                    Button(action:{ showingCreateSheet.toggle()}){
+                        Image(systemName: "plus")
+                    }
+                    
+                }.sheet(isPresented: $showingCreateSheet){
+                    createIngredient(showingSheet: $showingCreateSheet)
+                }
                 List {
                     ForEach(0..<ingredients.count, id: \.self) { index in
                         Group {
@@ -41,21 +49,19 @@ struct listIngredient: View {
                 }
                 EditButton()
             }
-        }.navigationBarItems(
+    /*}.navigationBarItems(
             trailing: Button(action:{ showingCreateSheet.toggle()}){
                 Image(systemName: "plus")
             }.sheet(isPresented: $showingCreateSheet){
                 createIngredient()
             }
-        )
+        )*/
         .task {
             
-            let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/ingredients")
             do {
                 
                 //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
-             let decoded : [IngredientDTO] = try await URLSession.shared.getJSON(from: url!)
-            
+                let decoded : [IngredientDTO] = try await IngredientService.getAllIngredient()
             //Pour chaque element dto on converti, compactMap =map mais plus simple
                 let maliste : [Ingredient] = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
                     return dto.ingredient
