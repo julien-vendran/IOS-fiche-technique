@@ -43,7 +43,7 @@ struct listIngredient: View {
             }
         } .task {
             
-            let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/allergen")
+            let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/ingredients")
             do {
                 
                 //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
@@ -55,7 +55,7 @@ struct listIngredient: View {
                 }
                 self.ingredients = maliste
                 
-            }catch let error {
+            } catch let error {
                     print(error.localizedDescription)
                 
             }
