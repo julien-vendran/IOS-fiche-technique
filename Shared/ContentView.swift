@@ -31,7 +31,11 @@ struct ContentView: View {
                 }
             listAllergen()
                 .tabItem {
-                    (Label("Allergène", systemImage: "square.and.pencil"))
+                    Label("Allergène", systemImage: "square.and.pencil")
+                }
+            ListRecipe()
+                .tabItem {
+                    Label("Recettes", systemImage: "pencil.slash")
                 }
         }
     }

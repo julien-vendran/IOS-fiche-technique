@@ -8,34 +8,37 @@
 import SwiftUI
 
 struct ListRecipe: View {
-    @State var recipeList: [Recipe] = [
-        Recipe( name: "Tomate farcie",
-                responsable: "Cuisinier",
-                nbOfCover: 3,
-                category: "Plat",
-                listOfStep: [])
-    ]
+    @ObservedObject var recipeListVM: RecipeListeVM
+    var recipeIntent: IntentRecipeList
+    
+    init () {
+        self.recipeIntent = IntentRecipeList()
+        self.recipeListVM = RecipeListeVM(recipe: [])
+        self.recipeIntent.addObserver(viewModel: self.recipeListVM)
+    }
     
     var body: some View {
         VStack {
             Spacer()
-            /*
             Text("Liste de vos recettes ")
                 .font(.largeTitle)
-             */
             List {
-                ForEach(recipeList, id: \.id) { recipe in
+                ForEach(self.$recipeListVM.associated_recipe_list, id: \.id) { recipe in
                     VStack {
-                        Text("\(recipe.name)")
+                        Text("Test")
                     }
                 }
                 .onDelete() { indexSet in
-                    recipeList.remove(atOffsets: indexSet)
+                    self.recipeListVM.associated_recipe_list.remove(atOffsets: indexSet)
                 }
             }
             EditButton()
         }
         .navigationTitle("Vos recettes")
+        .task {
+            print("Début de la lecture de nos recettes")
+            await self.recipeIntent.intentToLoad()
+        }
     }
 }
 

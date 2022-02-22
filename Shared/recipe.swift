@@ -9,6 +9,7 @@ import Foundation
 /*
  {"parents":{"parents":null,"id":11,"name":"Purée steack","responsable":"Cuisinier ","nbOfCover":4,"category":"Plat pour enfant"},"id":9,"name":"Purée de pomme de terre","responsable":"Cuisinier","nbOfCover":4,"category":"Plat","listOfSteps":
  */
+
 class Recipe: RecipeOrStep {
     var responsable: String
     var nbOfCover: Int

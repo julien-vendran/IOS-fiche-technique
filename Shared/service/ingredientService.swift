@@ -12,6 +12,6 @@ struct IngredientService{
     //static var ulrsession = URLRequest()//.shared.getJSON(from: url!)
     
     public static func getIngredient(id : Int){
-    
+        
     }
 }
