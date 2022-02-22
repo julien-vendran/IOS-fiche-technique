@@ -9,7 +9,7 @@ import SwiftUI
 
 struct listIngredient: View {
     @State var ingredients : [Ingredient]
-    @State var showingSheet: Bool = false
+    @State var showingCreateSheet	: Bool = false
     @State var currentIngredient : Ingredient? = nil
     
     init() {
@@ -41,7 +41,14 @@ struct listIngredient: View {
                 }
                 EditButton()
             }
-        } .task {
+        }.navigationBarItems(
+            trailing: Button(action:{ showingCreateSheet.toggle()}){
+                Image(systemName: "plus")
+            }.sheet(isPresented: $showingCreateSheet){
+                createIngredient()
+            }
+        )
+        .task {
             
             let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/ingredients")
             do {
