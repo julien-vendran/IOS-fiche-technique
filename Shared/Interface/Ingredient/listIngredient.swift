@@ -62,7 +62,7 @@ struct listIngredient: View {
                 }
                 self.ingredients = maliste
                 
-            }catch let error {
+            } catch let error {
                     print(error.localizedDescription)
                 
             }

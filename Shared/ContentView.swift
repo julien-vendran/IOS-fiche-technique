@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationView {
+        /*NavigationView {
             Form {
                 Section {
                     NavigationLink(destination: listIngredient()) {
@@ -22,6 +22,18 @@ struct ContentView: View {
             }
             .navigationTitle("Les totos")
         }.navigationViewStyle(StackNavigationViewStyle()) //Corrige les erreurs console du demarage
+         */
+        
+        TabView {
+            listIngredient()
+                .tabItem {
+                    Label("Menu", systemImage: "list.dash")
+                }
+            listAllergen()
+                .tabItem {
+                    (Label("Allergène", systemImage: "square.and.pencil"))
+                }
+        }
     }
 }
 

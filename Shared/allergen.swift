@@ -7,6 +7,9 @@
 
 import Foundation
 
+struct AllergenObserver {
+}
+
 class Allergen {
     
     var id : Int?

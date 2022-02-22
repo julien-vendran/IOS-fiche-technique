@@ -15,25 +15,34 @@ struct listAllergen: View {
         self.allergens = []
     }
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    ForEach(0..<allergens.count, id: \.self) { index in
-                        Group {
-                            Text("\(self.allergens[index].name)")
-                        }
-                    }
-                    .onDelete{indexSet in
-                        allergens.remove(atOffsets: indexSet)
-                    }
-                    .onMove{ indexSet, index in
-                        allergens.move(fromOffsets: indexSet, toOffset: index)
+        VStack {
+            Text("Allergènes")
+                .font(.largeTitle)
+            List {
+                ForEach(0..<allergens.count, id: \.self) { index in
+                    Group {
+                        Text("\(self.allergens[index].name)")
                     }
                 }
-                EditButton()
+                .onDelete{indexSet in
+                    allergens.remove(atOffsets: indexSet)
+                }
+                .onMove{ indexSet, index in
+                    allergens.move(fromOffsets: indexSet, toOffset: index)
+                }
             }
-        } .task {
-            
+            .sheet(isPresented: $showingAddSheet) {
+                createAllergen()
+            }
+            HStack {
+                EditButton()
+                Button("Ajouter") {
+                    self.showingAddSheet.toggle()
+                }
+            }.frame(height: 40)
+        }
+        .task {
+        
             let url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/allergen")
             do {
                 //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
@@ -44,16 +53,9 @@ struct listAllergen: View {
                     return dto.allergen
                 }
                 self.allergens = maliste
-            } catch {
-                    print("erreur ")
-                
+            }  catch let error {
+                print(error.localizedDescription)
             }
         }
     }
 }
-
-/*struct listIngredient_Previews: PreviewProvider {
-    static var previews: some View {
-        listIngredient()
-    }
-}*/
