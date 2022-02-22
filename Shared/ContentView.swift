@@ -12,9 +12,11 @@ struct ContentView: View {
         NavigationView {
             Form {
                 Section {
-                    
                     NavigationLink(destination: listIngredient()) {
                         Text("Liste des ingrédients")
+                    }.navigationTitle("")
+                    NavigationLink(destination: listAllergen()) {
+                        Text("Liste des allergènes")
                     }.navigationTitle("")
                 }
             }

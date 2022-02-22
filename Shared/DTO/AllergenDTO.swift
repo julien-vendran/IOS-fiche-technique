@@ -8,5 +8,10 @@
 import Foundation
 
 struct AllergenDTO : Codable {
+    var id_Allergen: Int?
+    var allergen_name: String
     
+    var allergen: Allergen {
+        return Allergen(id: id_Allergen, name: allergen_name)
+    }
 }
