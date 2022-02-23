@@ -37,11 +37,26 @@ class IngredientService {
             request.addValue(ingr.availableQuantity, forHTTPHeaderField: "availableQuantity")*/
             let dto = IngredientDTO(id: nil, name: ingr.name, unit: ingr.unit, availableQuantity: ingr.availableQuantity, unitPrice: ingr.unitPrice, associatedAllergen: [], denreeUsed:[])
             request.httpMethod = "POST"
-            let encoded = try? JSONEncoder().encode(dto)
+            do{
             
-            try? await URLSession.shared.upload(for: request, from:encoded!)
+            let encoded = try JSONEncoder().encode(dto)
+            let _ = try await URLSession.shared.upload(for: request, from:encoded)
+            }catch  let error {
+                print(error.localizedDescription)
+            }
             
-            
+        }
+    }
+    
+    public static func deletIngredient(id: Int) async {
+        if let url = URL(string: url_back+"\(id)"){
+            var request = URLRequest(url: url)
+            request.httpMethod="DELETE"
+            do{
+                let _ = try await URLSession.shared.data(for: request)
+            }catch let error{
+                print(error.localizedDescription)
+            }
         }
     }
 }

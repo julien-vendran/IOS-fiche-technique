@@ -16,29 +16,27 @@ struct listIngredient: View {
         self.ingredients=[]
     }
     var body: some View {
-       // NavigationView {
+        NavigationView() {
             VStack {
-                HStack{
-                    Button(action:{ showingCreateSheet.toggle()}){
-                        Image(systemName: "plus")
-                    }
-                    
-                }.sheet(isPresented: $showingCreateSheet){
-                    createIngredient(showingSheet: $showingCreateSheet)
-                }
+                Spacer()
                 List {
                     ForEach(0..<ingredients.count, id: \.self) { index in
                         Group {
                             Button("\(self.ingredients[index].name)") {
                                 self.currentIngredient = self.ingredients[index]
-                                    }
+                            }
                         }
                         /*NavigationLink(destination: ReadIngredient(ingredient: self.ingredients[index])) {
-                            Text(self.ingredients[index].name)
-                        }.navigationTitle("Liste ingrédients")*/
+                         Text(self.ingredients[index].name)
+                         }.navigationTitle("Liste ingrédients")*/
                     }
                     .onDelete{indexSet in
-                        ingredients.remove(atOffsets: indexSet)
+                         
+                         ingredients.remove(atOffsets: indexSet)
+                         /*   Task{
+                           await IngredientService.deletIngredient(id: removed.id)
+                            }*/
+                    
                     }
                     .onMove{ indexSet, index in
                         ingredients.move(fromOffsets: indexSet, toOffset: index)
@@ -47,34 +45,41 @@ struct listIngredient: View {
                 }.sheet(item: $currentIngredient) { ing in
                     ReadIngredient(ingredient: ing)
                 }
-                EditButton()
+                //    EditButton()
+                
+                
             }
-    /*}.navigationBarItems(
-            trailing: Button(action:{ showingCreateSheet.toggle()}){
-                Image(systemName: "plus")
-            }.sheet(isPresented: $showingCreateSheet){
-                createIngredient()
-            }
-        )*/
-        .task {
             
-            do {
+            .task {
                 
-                //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
-                let decoded : [IngredientDTO] = try await IngredientService.getAllIngredient()
-            //Pour chaque element dto on converti, compactMap =map mais plus simple
-                let maliste : [Ingredient] = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
-                    return dto.ingredient
-                }
-                self.ingredients = maliste
-                
-            } catch let error {
+                do {
+                    
+                    //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
+                    let decoded : [IngredientDTO] = try await IngredientService.getAllIngredient()
+                    //Pour chaque element dto on converti, compactMap =map mais plus simple
+                    let maliste : [Ingredient] = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
+                        return dto.ingredient
+                    }
+                    self.ingredients = maliste
+                    
+                } catch let error {
                     print(error.localizedDescription)
-                
+                    
+                }
+            } .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        showingCreateSheet.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
             }
         }
-       
-            
+        
     }
 }
 
