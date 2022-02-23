@@ -11,9 +11,13 @@ struct ListRecipe: View {
     @ObservedObject var recipeListVM: RecipeListeVM
     var recipeIntent: IntentRecipeList
     
+    @State var showCreationSheet: Bool = false
+    @ObservedObject var recipe_creation: Recipe
+    
     init () {
         self.recipeIntent = IntentRecipeList()
         self.recipeListVM = RecipeListeVM(recipe: [])
+        self.recipe_creation = Recipe(name: "", responsable: "", nbOfCover: 0, category: "", listOfStep: [], id: nil)
         self.recipeIntent.addObserver(viewModel: self.recipeListVM)
     }
     
@@ -26,7 +30,8 @@ struct ListRecipe: View {
                         VStack {
                             NavigationLink(destination: ReadRecipe(recipe: self.recipeListVM[idRecipe])) {
                                 Text("\(self.recipeListVM[idRecipe].name)")
-                            }.navigationTitle("Vos recettes ")
+                            }
+                            .navigationTitle("Vos recettes ")
                         }
                     }
                     .onDelete() { indexSet in
@@ -45,8 +50,20 @@ struct ListRecipe: View {
                     EditButton()
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {print("Bouton plus pressé")}) {
+                    Button(action: {
+                        self.showCreationSheet.toggle()
+                    }) {
                         Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: self.$showCreationSheet) {
+                Form {
+                    Section(header: Text("Informations générales")) {
+                        TextField("Nom de la recette", text: $recipe_creation.name)
+                        TextField("Responsable", text: $recipe_creation.responsable)
+                        //TextField("", text: $recipe_creation.nbOfCover)// TODO: Accepter que les nombres
+                        TextField("Catégorie de recette", text: $recipe_creation.category)
                     }
                 }
             }

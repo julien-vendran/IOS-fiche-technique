@@ -38,7 +38,7 @@ struct ReadIngredient: View {
                 }
             }
             
-            Spacer().frame(width: .infinity, height: 30)
+            Spacer().frame(height: 30)
         }
         .frame(
             minWidth: 0,
