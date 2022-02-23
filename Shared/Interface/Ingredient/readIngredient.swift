@@ -13,7 +13,6 @@ struct ReadIngredient: View {
     init (ingredient : Ingredient) {
         self.ingredient = ingredient
         self.url = "https://www.cjoint.com/doc/20_12/JLFrj6Sanqu_image-not-found.png"
-       
     }
     var body: some View {
         VStack {

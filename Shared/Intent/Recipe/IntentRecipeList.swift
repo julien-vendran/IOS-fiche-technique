@@ -13,7 +13,6 @@ enum IntentStateRecipeList: CustomStringConvertible {
     case loading
     case load
     case loaded([Recipe])
-    
     var description: String {
         switch self {
         case .ready:
@@ -38,6 +37,8 @@ class IntentRecipeList {
     func intentToLoad() async {
         self.state.send(.loading)
         let data: [Recipe] = await RecipeService.getAllRecipe()
-        self.state.send(.loaded(data))
+        DispatchQueue.main.async {
+            self.state.send(.loaded(data))
+        }
     }
 }

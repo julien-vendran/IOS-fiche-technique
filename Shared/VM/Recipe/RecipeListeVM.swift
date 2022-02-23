@@ -12,11 +12,23 @@ class RecipeListeVM: ObservableObject, Subscriber {
     
     @Published var associated_recipe_list: [Recipe]
     
+    var count: Int {
+        return self.associated_recipe_list.count
+    }
+    var isEmpty: Bool {
+        return self.associated_recipe_list.count <= 0
+    }
+    
     init (recipe: [Recipe]) {
         self.associated_recipe_list = recipe
     }
     
-    //Activé à chaque send
+    //Fonction utiles
+    subscript(index: Int) -> Recipe { //Redéfinir []
+        return self.associated_recipe_list[index]
+    }
+    
+    //Activé à chaque send -> Cette partie est utilisée pour la gestion des états de la page (State)
     typealias Input = IntentStateRecipeList
     
     typealias Failure = Never

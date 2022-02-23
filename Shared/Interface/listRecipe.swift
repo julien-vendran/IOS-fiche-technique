@@ -18,26 +18,38 @@ struct ListRecipe: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Liste de vos recettes ")
-                .font(.largeTitle)
-            List {
-                ForEach(self.$recipeListVM.associated_recipe_list, id: \.id) { recipe in
-                    VStack {
-                        Text("Test")
+        NavigationView() {
+            VStack {
+                Spacer()
+                List {
+                    ForEach((0..<self.recipeListVM.count), id: \.self) { idRecipe in
+                        VStack {
+                            NavigationLink(destination: ReadRecipe(recipe: self.recipeListVM[idRecipe])) {
+                                Text("\(self.recipeListVM[idRecipe].name)")
+                            }.navigationTitle("Vos recettes ")
+                        }
+                    }
+                    .onDelete() { indexSet in
+                        self.recipeListVM.associated_recipe_list.remove(atOffsets: indexSet)
                     }
                 }
-                .onDelete() { indexSet in
-                    self.recipeListVM.associated_recipe_list.remove(atOffsets: indexSet)
+            }
+            .navigationTitle("Vos recettes")
+            .task {
+                if (self.recipeListVM.isEmpty) {
+                    await self.recipeIntent.intentToLoad()
                 }
             }
-            EditButton()
-        }
-        .navigationTitle("Vos recettes")
-        .task {
-            print("Début de la lecture de nos recettes")
-            await self.recipeIntent.intentToLoad()
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {print("Bouton plus pressé")}) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
         }
     }
 }

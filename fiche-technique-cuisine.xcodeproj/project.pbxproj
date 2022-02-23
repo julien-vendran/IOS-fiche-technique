@@ -37,6 +37,7 @@
 		6FC966F227BC455E006C33B4 /* recipe-or-step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966F127BC455E006C33B4 /* recipe-or-step.swift */; };
 		6FC966F627BC46B5006C33B4 /* step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966F527BC46B5006C33B4 /* step.swift */; };
 		6FC966FA27BC47CF006C33B4 /* recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966F927BC47CF006C33B4 /* recipe.swift */; };
+		B70F364D27C616E500068F4B /* readRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70F364C27C616E500068F4B /* readRecipe.swift */; };
 		B763C8AE27C4C91500C79DAF /* listAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763C8AD27C4C91500C79DAF /* listAllergen.swift */; };
 		B763C8B727C4DFB700C79DAF /* IntentListAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763C8B627C4DFB700C79DAF /* IntentListAllergen.swift */; };
 		B763C8B927C4E40200C79DAF /* createAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763C8B827C4E40200C79DAF /* createAllergen.swift */; };
@@ -96,6 +97,7 @@
 		6FC966F127BC455E006C33B4 /* recipe-or-step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "recipe-or-step.swift"; sourceTree = "<group>"; };
 		6FC966F527BC46B5006C33B4 /* step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = step.swift; sourceTree = "<group>"; };
 		6FC966F927BC47CF006C33B4 /* recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipe.swift; sourceTree = "<group>"; };
+		B70F364C27C616E500068F4B /* readRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = readRecipe.swift; sourceTree = "<group>"; };
 		B763C8AD27C4C91500C79DAF /* listAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listAllergen.swift; sourceTree = "<group>"; };
 		B763C8B627C4DFB700C79DAF /* IntentListAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentListAllergen.swift; sourceTree = "<group>"; };
 		B763C8B827C4E40200C79DAF /* createAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createAllergen.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				6FC966EC27BC152F006C33B4 /* listRecipe.swift */,
+				B70F364C27C616E500068F4B /* readRecipe.swift */,
 			);
 			name = Recipe;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				B7DEF6E227C518F6003A53BC /* RecipeOrStepDTO.swift in Sources */,
 				6F2B958927C4C6290091F706 /* createIngredient.swift in Sources */,
 				6F2B958C27C4E3790091F706 /* ingredientService.swift in Sources */,
+				B70F364D27C616E500068F4B /* readRecipe.swift in Sources */,
 				6F3D385227C12E59008C36CD /* imgDTO.swift in Sources */,
 				6FC966E627BBF819006C33B4 /* ingredient.swift in Sources */,
 				6FC966E427BBF6A2006C33B4 /* cost.swift in Sources */,
