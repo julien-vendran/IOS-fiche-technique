@@ -14,11 +14,11 @@ struct ContentView: View {
         TabView {
             listIngredient()
                 .tabItem {
-                    Label("Menu", systemImage: "list.dash")
+                    Label(" 🥕 Ingrédients", systemImage: "list.dash")
                 }
             listAllergen()
                 .tabItem {
-                    Label("Allergène", systemImage: "square.and.pencil")
+                    Label("Allergènes", systemImage: "square.and.pencil")
                 }
             ListRecipe()
                 .tabItem {

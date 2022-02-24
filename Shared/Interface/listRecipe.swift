@@ -58,14 +58,7 @@ struct ListRecipe: View {
                 }
             }
             .sheet(isPresented: self.$showCreationSheet) {
-                Form {
-                    Section(header: Text("Informations générales")) {
-                        TextField("Nom de la recette", text: $recipe_creation.name)
-                        TextField("Responsable", text: $recipe_creation.responsable)
-                        //TextField("", text: $recipe_creation.nbOfCover)// TODO: Accepter que les nombres
-                        TextField("Catégorie de recette", text: $recipe_creation.category)
-                    }
-                }
+                createRecipe(recipeIntent: self.recipeIntent)
             }
         }
     }

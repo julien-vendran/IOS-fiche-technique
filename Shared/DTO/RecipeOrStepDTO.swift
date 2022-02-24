@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecipeOrStepDTO: Decodable {
+struct RecipeOrStepDTO: Decodable, Encodable {
     var id: Int?
     var name: String
     

@@ -9,9 +9,9 @@ import Foundation
 /*
  {"parents":{"parents":null,"id":11,"name":"Purée steack","responsable":"Cuisinier ","nbOfCover":4,"category":"Plat pour enfant"},"id":9,"name":"Purée de pomme de terre","responsable":"Cuisinier","nbOfCover":4,"category":"Plat","listOfSteps":[{"parents":null,"id":8,"name":"Préparation de la purée","description":"Faire cuire les pommes de terres à l'eau. Les éplucher. Les écraser","duration":40,"denreeUsed":[{"id":19,"quantity":1,"ingredient":{"id":22,"name":"Pomme de terre","unit":"Kg","availableQuantity":17,"unitPrice":1}}]}]}
  */
-struct RecipeDTO: Decodable {
+struct RecipeDTO: Decodable, Encodable {
     
-    var id : Int
+    var id : Int?
     var name : String
     var responsable : String
     var nbOfCover : Int

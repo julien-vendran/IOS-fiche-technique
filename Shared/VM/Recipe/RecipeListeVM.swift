@@ -55,6 +55,10 @@ class RecipeListeVM: ObservableObject, Subscriber {
             self.associated_recipe_list = data
             print("On vient d'affecter nos données")
             print(self.associated_recipe_list)
+        case .adding: //on est en cours d'ajout
+            break
+        case .added(_):
+            break
         }
         return .none
     }
