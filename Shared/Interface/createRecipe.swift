@@ -13,6 +13,7 @@ struct createRecipe: View {
     
     //On va s'en servir pour communiquer nos intentions 
     var recipeIntent: IntentRecipeList
+    var stepIntent: IntentRecipeCreate
     var recipeInStock: [Recipe]
     
     @State var recipeChoosed: Recipe? = nil
@@ -21,7 +22,7 @@ struct createRecipe: View {
     @State var responsable: String = ""
     @State var nbOfCover: Int = 0
     @State var category: String = ""
-    @State var listOfSteps: [RecipeOrStep] = []
+    @ObservedObject var listOfSteps: RecipeCreateStepListVM = RecipeCreateStepListVM()
     
     var isFormValid: Bool {
         if (self.name == "") {
@@ -41,15 +42,21 @@ struct createRecipe: View {
     
     init (recipeIntent: IntentRecipeList, recipeInStock: [Recipe]) {
         self.recipeIntent = recipeIntent
+        //On va se servir de ça pour avoir le retour sur les données des étapes ajoutées
+        self.stepIntent = IntentRecipeCreate()
         self.recipeInStock = recipeInStock
+        
+        self.stepIntent.addObserver(viewModel: self.listOfSteps)
         if (recipeInStock.count > 0) {
             self.recipeChoosed = recipeInStock[0]
         }
     }
+    
     let col = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+
     var body: some View {
         Form {
             Section(header: Text("Informations générales")) {
@@ -68,15 +75,16 @@ struct createRecipe: View {
                     Text("Catégorie")
                     TextField("Catégorie de recette", text: $category)
                 }
-                //TextField("", text: $recipe_creation.nbOfCover)     // TODO: Accepter que les nombres
             }
 
             Section(header: EditButton()
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .overlay(Text("Liste d'étapes")	, alignment: .leading)
             ) {
-                Button("Ajouter une étape") {
-                    self.listOfSteps.append(Step(name: "", id: nil))
+                NavigationLink (destination: CreateStep(stepIntent: self.stepIntent)) {
+                    Button(action: {}) {
+                        Text("Ajouter une étape")
+                    }
                 }
                 /*Picker("", selection: $recipeChoosed) {
                     ForEach(0..<self.recipeInStock.count) { id in
@@ -84,6 +92,7 @@ struct createRecipe: View {
                     }
                 }*/
                 Button("Ajouter une recette") {
+                    print("Ajout d'une recette")
                     self.listOfSteps.append(Recipe(name: "", responsable: "", nbOfCover: 0, category: "", listOfStep: [], id: nil))
                 }
                 List {
@@ -94,12 +103,13 @@ struct createRecipe: View {
                         else {
                             Text("Nouvelle Recette")
                         }
+                        //Text("Recette : \(idSOR)")
                     }
                     .onDelete() { indexSet in
-                        self.listOfSteps.remove(atOffsets: indexSet)
+                        self.listOfSteps.recipeOrStep_list.remove(atOffsets: indexSet)
                     }
                     .onMove{ indexSet, index in
-                        self.listOfSteps.move(fromOffsets: indexSet, toOffset: index)
+                        self.listOfSteps.recipeOrStep_list.move(fromOffsets: indexSet, toOffset: index)
                     }
                 }
             }
@@ -117,6 +127,7 @@ struct createRecipe: View {
                 }.foregroundColor(.red)
             }
         }
+        .navigationTitle("Création d'une recette")
     }
 }
 

@@ -7,14 +7,32 @@
 
 import SwiftUI
 
-struct createStep: View {
+struct CreateStep: View {
+    var stepIntent: IntentRecipeCreate
+    
+    @State var name: String = ""
+    @State var description: String = ""
+    @State var duration: Double = 0.0
+    @State var denreeUsed: [Denree] = []
+    
+    let col = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Hello, World!")
+            Button("Ajouter une étape test") {
+                print("On vient d'appuyer sur le bouton")
+                //self.stepIntent.intentToCreate(step: Step(name: "Test d'étape", id: nil))
+            }
+        }.navigationTitle("Création d'une recette")
     }
 }
 
-struct createStep_Previews: PreviewProvider {
+/*struct createStep_Previews: PreviewProvider {
     static var previews: some View {
-        createStep()
+        CreateStep()
     }
-}
+}*/
