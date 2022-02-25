@@ -20,6 +20,9 @@
 		6F3D384A27BE7BDE008C36CD /* DenreeDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3D384927BE7BDE008C36CD /* DenreeDTO.swift */; };
 		6F3D385027BE949B008C36CD /* IntentListIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3D384F27BE949B008C36CD /* IntentListIngredient.swift */; };
 		6F3D385227C12E59008C36CD /* imgDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3D385127C12E59008C36CD /* imgDTO.swift */; };
+		6F5ABBFD27C7E8ED00B03138 /* allergenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABBFC27C7E8ED00B03138 /* allergenService.swift */; };
+		6F5ABBFF27C90FD100B03138 /* createStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABBFE27C90FD100B03138 /* createStep.swift */; };
+		6F5ABC0127C9165B00B03138 /* IntentRecipeCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */; };
 		6FC966BD27B54BA5006C33B4 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966BC27B54BA5006C33B4 /* Tests_iOS.swift */; };
 		6FC966BF27B54BA5006C33B4 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966BE27B54BA5006C33B4 /* Tests_iOSLaunchTests.swift */; };
 		6FC966C927B54BA5006C33B4 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966C827B54BA5006C33B4 /* Tests_macOS.swift */; };
@@ -79,6 +82,9 @@
 		6F3D384927BE7BDE008C36CD /* DenreeDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DenreeDTO.swift; sourceTree = "<group>"; };
 		6F3D384F27BE949B008C36CD /* IntentListIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentListIngredient.swift; sourceTree = "<group>"; };
 		6F3D385127C12E59008C36CD /* imgDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imgDTO.swift; sourceTree = "<group>"; };
+		6F5ABBFC27C7E8ED00B03138 /* allergenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allergenService.swift; sourceTree = "<group>"; };
+		6F5ABBFE27C90FD100B03138 /* createStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createStep.swift; sourceTree = "<group>"; };
+		6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentRecipeCreate.swift; sourceTree = "<group>"; };
 		6FC966A427B54BA4006C33B4 /* fiche_technique_cuisineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fiche_technique_cuisineApp.swift; sourceTree = "<group>"; };
 		6FC966A527B54BA4006C33B4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6FC966A627B54BA5006C33B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,6 +152,7 @@
 			children = (
 				B7DEF6DC27C514D3003A53BC /* Recipe */,
 				6F2B958B27C4E3790091F706 /* ingredientService.swift */,
+				6F5ABBFC27C7E8ED00B03138 /* allergenService.swift */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -304,6 +311,7 @@
 				6FC966EC27BC152F006C33B4 /* listRecipe.swift */,
 				B70F364C27C616E500068F4B /* readRecipe.swift */,
 				6F2B959127C660CE0091F706 /* createRecipe.swift */,
+				6F5ABBFE27C90FD100B03138 /* createStep.swift */,
 			);
 			name = Recipe;
 			sourceTree = "<group>";
@@ -336,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				B7DEF6E427C5245C003A53BC /* IntentRecipeList.swift */,
+				6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -517,10 +526,13 @@
 				B7DEF6E227C518F6003A53BC /* RecipeOrStepDTO.swift in Sources */,
 				6F2B958927C4C6290091F706 /* createIngredient.swift in Sources */,
 				6F2B958C27C4E3790091F706 /* ingredientService.swift in Sources */,
+				6F5ABBFD27C7E8ED00B03138 /* allergenService.swift in Sources */,
+				6F5ABBFF27C90FD100B03138 /* createStep.swift in Sources */,
 				B70F364D27C616E500068F4B /* readRecipe.swift in Sources */,
 				6F3D385227C12E59008C36CD /* imgDTO.swift in Sources */,
 				6FC966E627BBF819006C33B4 /* ingredient.swift in Sources */,
 				6FC966E427BBF6A2006C33B4 /* cost.swift in Sources */,
+				6F5ABC0127C9165B00B03138 /* IntentRecipeCreate.swift in Sources */,
 				B763C8B727C4DFB700C79DAF /* IntentListAllergen.swift in Sources */,
 				B7DEF6E527C5245C003A53BC /* IntentRecipeList.swift in Sources */,
 				B763C8AE27C4C91500C79DAF /* listAllergen.swift in Sources */,

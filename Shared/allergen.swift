@@ -10,7 +10,11 @@ import Foundation
 struct AllergenObserver {
 }
 
-class Allergen {
+struct Allergen : Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     
     var id : Int?
     var name : String

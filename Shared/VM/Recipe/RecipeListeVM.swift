@@ -57,8 +57,13 @@ class RecipeListeVM: ObservableObject, Subscriber {
             print(self.associated_recipe_list)
         case .adding: //on est en cours d'ajout
             break
-        case .added(_):
-            break
+        case .added(let recipe):
+            if (recipe != nil) {
+                print(recipe!)
+                self.associated_recipe_list.append(recipe!)
+            } else { //Erreur dans l'ajout de notre recette
+                print("Erreur dans la création de la recette")
+            }
         }
         return .none
     }

@@ -44,6 +44,8 @@ struct listIngredient: View {
                     
                 }.sheet(item: $currentIngredient) { ing in
                     ReadIngredient(ingredient: ing)
+                }.sheet(isPresented: $showingCreateSheet){
+                    createIngredient()
                 }
                 //    EditButton()
                 
@@ -73,6 +75,7 @@ struct listIngredient: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         showingCreateSheet.toggle()
+                       
                     }) {
                         Image(systemName: "plus")
                     }

@@ -11,7 +11,7 @@ struct ListRecipe: View {
     @ObservedObject var recipeListVM: RecipeListeVM
     var recipeIntent: IntentRecipeList
     
-    @State var showCreationSheet: Bool = false
+    //@State var showCreationSheet: Bool = false
     @ObservedObject var recipe_creation: Recipe
     
     init () {
@@ -50,15 +50,10 @@ struct ListRecipe: View {
                     EditButton()
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        self.showCreationSheet.toggle()
-                    }) {
+                    NavigationLink (destination: createRecipe(recipeIntent: self.recipeIntent, recipeInStock: self.recipeListVM.associated_recipe_list)) {    
                         Image(systemName: "plus")
                     }
                 }
-            }
-            .sheet(isPresented: self.$showCreationSheet) {
-                createRecipe(recipeIntent: self.recipeIntent)
             }
         }
     }
@@ -69,5 +64,4 @@ struct ListRecipe_Previews: PreviewProvider {
         ListRecipe()
     }
 }
-	
-						
+

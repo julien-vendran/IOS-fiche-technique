@@ -8,7 +8,7 @@
 import Foundation
 
 struct JSONHelpler {
-    static func decode <T: Decodable> (model: T, data: Data) -> T? {
+    static func decode <T: Decodable> (data: Data) -> T? {
         let decoder = JSONDecoder()
         if let decoded = try? decoder.decode(T.self, from: data) {
             return decoded

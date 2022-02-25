@@ -29,7 +29,7 @@ class RecipeService {
         return []
     }
     
-    static func createRecipe(recipe: Recipe) async -> Void {
+    static func createRecipe(recipe: Recipe) async -> Recipe? {
         print("Début de la fonction createRecipe")
         if let url_back = self.url {
             var request = URLRequest(url: url_back)
@@ -38,10 +38,18 @@ class RecipeService {
             request.httpMethod = "POST"
             do {
                 let encoded = try JSONEncoder().encode(recipe_dto)
-                let _ = try await URLSession.shared.upload(for: request, from: encoded)
+                let addedValue = try await URLSession.shared.upload(for: request, from: encoded)
+                let addedRecipe: RecipeDTO? = JSONHelpler.decode(data: addedValue.0)
+                if (addedRecipe != nil) {
+                    return addedRecipe!.recipe
+                } else {
+                    return nil
+                }
+
             } catch let error {
                 print(error)
             }
         }
+        return nil
     }
 }

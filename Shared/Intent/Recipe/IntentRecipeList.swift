@@ -15,7 +15,8 @@ enum IntentStateRecipeList: CustomStringConvertible {
     case loaded([Recipe])
     
     case adding
-    case added(Recipe)
+    case added(Recipe?)
+    
     var description: String {
         switch self {
         case .ready:
@@ -54,10 +55,8 @@ class IntentRecipeList {
         //On va créer notre objet et si tout s'est bien passé, on va recharger la vue
         self.state.send(.adding) //On passe en mode ajout d'une recette
         
-        await RecipeService.createRecipe(recipe: recipe)
+        let result: Recipe? = await RecipeService.createRecipe(recipe: recipe)
         
-        self.state.send(.added(recipe))
-        
-        await self.intentToLoad()
+        self.state.send(.added(result))	
     }
 }
