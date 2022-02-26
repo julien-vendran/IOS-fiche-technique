@@ -98,7 +98,7 @@ struct createRecipe: View {
                 List {
                     ForEach(0..<self.listOfSteps.count, id: \.self) { idSOR in
                         if (self.listOfSteps[idSOR] is Step) {
-                            Text("Nouvelle étape")
+                            Text("Nouvelle étape : \(self.listOfSteps[idSOR].name)")
                         }
                         else {
                             Text("Nouvelle Recette")
