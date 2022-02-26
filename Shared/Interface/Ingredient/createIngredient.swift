@@ -43,13 +43,17 @@ struct createIngredient: View {
                         Button("Choix allergen "){
                             showAllergen.toggle()
                         }
+                       
                     }.sheet(isPresented: $showAllergen){
-                        List(listAllergen, id: \.self, selection: $associatedAllergen) { aler in
-                            Text("\(aler.name)")
+                      List(selection: $associatedAllergen) {
+                            ForEach(listAllergen, id: \.id){aler in
+                                Text("\(aler.name)")
+                             
+                            }
+                          Text("\($listAllergen.count)")
                         }.environment(\.editMode, .constant(EditMode.active))
-                        
                     }
-                    Button("Valider", action: validate)
+                   
                 }
             }
         }.task {
@@ -60,6 +64,7 @@ struct createIngredient: View {
                     return dto.allergen
                 }
                 self.listAllergen = maliste
+                print("alergen loaded \(maliste.count) \(listAllergen.count)")
             }catch let error{
                 print(error.localizedDescription)
             }
@@ -70,8 +75,10 @@ struct createIngredient: View {
         let ig = Ingredient(name: name, unit: unit, availableQuantity: availableQuantity, unitPrice: unitPrice, associatedAllergen: Array(associatedAllergen), denreeUsed: [], id: nil)
         print(ig)
         Task{
-            await IngredientService.saveIngredient(ig)
+       //     await IngredientService.saveIngredient(ig)
         }
+        print(associatedAllergen)
+        print("on valide")
         // showingSheet.toggle()
         presentationMode.wrappedValue.dismiss()
     }

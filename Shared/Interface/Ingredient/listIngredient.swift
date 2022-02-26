@@ -8,38 +8,42 @@
 import SwiftUI
 
 struct listIngredient: View {
+    @ObservedObject var vm: IngredientListVM
+    var intent: IntentIngredientList
     @State var ingredients : [Ingredient]
     @State var showingCreateSheet	: Bool = false
     @State var currentIngredient : Ingredient? = nil
     
     init() {
         self.ingredients=[]
+        vm = IngredientListVM(ingredient: [])
+        intent = IntentIngredientList()
+        intent.addObserver(viewModel: vm)
     }
     var body: some View {
         NavigationView() {
             VStack {
                 Spacer()
                 List {
-                    ForEach(0..<ingredients.count, id: \.self) { index in
+                    ForEach(0..<vm.count, id: \.self) { index in
                         Group {
-                            Button("\(self.ingredients[index].name)") {
-                                self.currentIngredient = self.ingredients[index]
+                            Button("\(self.vm[index].name)") {
+                                self.currentIngredient = self.vm[index]
                             }
                         }
-                        /*NavigationLink(destination: ReadIngredient(ingredient: self.ingredients[index])) {
-                         Text(self.ingredients[index].name)
-                         }.navigationTitle("Liste ingrédients")*/
+                     
                     }
                     .onDelete{indexSet in
-                         
-                         ingredients.remove(atOffsets: indexSet)
-                         /*   Task{
-                           await IngredientService.deletIngredient(id: removed.id)
-                            }*/
+                        let toRemove = vm.remove(atOffsets: indexSet)
+                        Task{
+                            for ingre in toRemove{
+                               await intent.intentToDelete(ingredient: ingre)
+                            }
+                        }
                     
                     }
                     .onMove{ indexSet, index in
-                        ingredients.move(fromOffsets: indexSet, toOffset: index)
+                        vm.move(fromOffsets: indexSet, toOffset: index)
                     }
                     
                 }.sheet(item: $currentIngredient) { ing in
@@ -53,21 +57,12 @@ struct listIngredient: View {
             }
             
             .task {
-                
-                do {
-                    
-                    //Ici on récupere une liste de IngredientDTO (il comprends que le json est un tableau de IngredietnsDTO tout seul) !
-                    let decoded : [IngredientDTO] = try await IngredientService.getAllIngredient()
-                    //Pour chaque element dto on converti, compactMap =map mais plus simple
-                    let maliste : [Ingredient] = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
-                        return dto.ingredient
-                    }
-                    self.ingredients = maliste
-                    
-                } catch let error {
-                    print(error.localizedDescription)
-                    
+                if(self.vm.isEmpty){
+                    await self.intent.intentToLoad()
                 }
+          //     self.ingredients = await IngredientService.getAllIngredient()
+                    
+               
             } .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     EditButton()
