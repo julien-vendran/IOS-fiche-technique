@@ -16,12 +16,27 @@ struct CreateStep: View {
     @State var name: String = ""
     @State var description: String = "Entrez la description de votre recette"
     @State var duration: Double = 0.0
-    @State var denreeUsed: [Denree] = []
-    
+    //@State var denreeUsed: [Denree] = []
+    @ObservedObject var denreeUsed: RecipeDenreeCreateVM = RecipeDenreeCreateVM()
     let col = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    var isValid: Bool {
+        if (self.name == "") {
+            return false
+        }
+        if (duration <= 0) {
+            return false
+        }
+        return true
+    }
+    
+    init (stepIntent: IntentRecipeCreate) {
+        self.stepIntent = stepIntent
+        self.stepIntent.addObserver(viewModel: self.denreeUsed)
+    }
     
     var body: some View {
         let placeholderString: String = "Entrez la description de votre recette"
@@ -43,18 +58,39 @@ struct CreateStep: View {
                         }
                     }
             }
-            Section(header: Text("Ingrédients nécessaires")) {
-                Text("Faire le même bordel pour les ingrédients ^^")
+            Section(header: EditButton()
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .overlay(Text("Liste d'ingrédients"), alignment: .leading)
+            ) {
+                List {
+                    ForEach(self.denreeUsed.denree_list, id:\.id) { d in
+                        //TODO: Refaire ça proprement
+                        Text("Test ingrédient : \(d.quantity)")
+                    }
+                    .onDelete() { indexSet in
+                        self.denreeUsed.denree_list.remove(atOffsets: indexSet)
+                    }
+                    .onMove{ indexSet, index in
+                        self.denreeUsed.denree_list.move(fromOffsets: indexSet, toOffset: index)
+                    }
+                }
+                
+                NavigationLink(destination: CreateDenree(intent: self.stepIntent)) {
+                    Button(action: {}) {
+                        Text("Lier des ingredients")
+                    }
+                }
             }
             Section() {
                 Button("Ajouter étape") {
                     if (self.description == placeholderString) {
                         self.description = ""
                     }
-                    let s: Step = Step(name: self.name, description: self.description, duration: self.duration, denreeUsed: self.denreeUsed, id: nil)
+                    let s: Step = Step(name: self.name, description: self.description, duration: self.duration, denreeUsed: self.denreeUsed.denree_list, id: nil)
                     self.stepIntent.intentToCreate(step: s)
                     presentationMode.wrappedValue.dismiss()
                 }
+                .disabled(!self.isValid)
                 Button("Annuler l'ajout de l'étape") {
                     presentationMode.wrappedValue.dismiss()
                 }.foregroundColor(.red)

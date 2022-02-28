@@ -1,35 +1,35 @@
 //
-//  RecipeCreateStepListVM.swift
+//  RecipeDenreeCreateVM.swift
 //  fiche-technique-cuisine (iOS)
 //
-//  Created by m1 on 25/02/2022.
+//  Created by m1 on 28/02/2022.
 //
 
 import Foundation
 import Combine
 
-class RecipeCreateStepListVM: ObservableObject, Subscriber {
+class RecipeDenreeCreateVM: ObservableObject, Subscriber {
     
-    @Published var recipeOrStep_list: [RecipeOrStep]
+    @Published var denree_list: [Denree]
     
     var count: Int {
-        return self.recipeOrStep_list.count
+        return self.denree_list.count
     }
     var isEmpty: Bool {
-        return self.recipeOrStep_list.count <= 0
+        return self.denree_list.count <= 0
     }
     
     init () {
-        self.recipeOrStep_list = []
+        self.denree_list = []
     }
     
     //Fonction utiles
-    subscript(index: Int) -> RecipeOrStep { //Redéfinir []
-        return self.recipeOrStep_list[index]
+    subscript(index: Int) -> Denree { //Redéfinir []
+        return self.denree_list[index]
     }
     
-    func append(_ el: RecipeOrStep) {
-        self.recipeOrStep_list.append(el)
+    func append(_ el: Denree) {
+        self.denree_list.append(el)
     }
     
     //Activé à chaque send -> Cette partie est utilisée pour la gestion des états de la page (State)
@@ -51,12 +51,14 @@ class RecipeCreateStepListVM: ObservableObject, Subscriber {
         switch input {
         case .ready: //On a rien à faire
             break
-        case .stepAdded(let el):
-            self.append(el)
-            print(self.recipeOrStep_list)
-        case .denreeAdded(_):
+        case .stepAdded(_):
             break
+        case .denreeAdded(let denree):
+            self.append(denree)
         }
         return .none
     }
 }
+
+
+

@@ -10,15 +10,16 @@ import SwiftUI
 struct listAllergen: View {
     @State var allergens : [Allergen]
     @State var showingAddSheet: Bool = false
-    
+    @State var list : Set<Allergen>
     init() {
         self.allergens = []
+        self.list = Set()
     }
     var body: some View {
         VStack {
             Text("Allergènes")
                 .font(.largeTitle)
-            List {
+            List(selection: $list) {
                 ForEach(0..<allergens.count, id: \.self) { index in
                     Group {
                         Text("\(self.allergens[index].name)")

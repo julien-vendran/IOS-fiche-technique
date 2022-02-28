@@ -40,30 +40,33 @@ struct createIngredient: View {
                     Group{
                         Text("Prix unitaire :"); TextField("",value: $vm.unitPrice,formatter: NumberFormatter())
                     }
-                    Group{
-                        Button("Choix allergen "){
-                            showAllergen.toggle()
-                        }
-                        
-                    }.sheet(isPresented: $showAllergen){
-                     /*   List(selection: $vm.associatedAllergen) {
+                  .sheet(isPresented: $showAllergen){/*
+                        List(selection: $vm.associatedAllergen) {
                             ForEach(0..<vm.listAllergen.count, id: \.self) { index in
                                 Text("\(vm.listAllergen[index].name)")
                             }
-                         EditButton()
+                        
                         }
-                      */
-                        VStack {
-                            List(vm.listAllergen, id: \.id, selection: $selection) { allergen in
-                                Text("\(allergen.name)")
-                            }
-                            EditButton()
-                        }
+                        EditButton()*/
+                        addAllergen(vm: vm)
+                     
                     }
                     
+                  
+                    
                 }
+                
             }
-        }.task {
+        }
+        HStack{
+            Button("Choix allergen "){
+                showAllergen.toggle()
+            }
+            Button(action: validate) {
+                Text("valider")
+            }
+        }
+        .task {
             
            // self.listAllergen = await AllergenService.getAllallergen()
            await self.intent.intentToLoad()
@@ -71,10 +74,13 @@ struct createIngredient: View {
         }
     }
     
-    func validate(){/*
-        let ig = Ingredient(name: name, unit: unit, availableQuantity: availableQuantity, unitPrice: unitPrice, associatedAllergen: Array(associatedAllergen), denreeUsed: [], id: nil)
-        print(ig)
-        Task{
+    func validate(){
+        
+        
+        let ig = Ingredient(name: self.vm.name, unit: self.vm.unit, availableQuantity:self.vm.availableQuantity, unitPrice: self.vm.unitPrice, associatedAllergen: Array(self.vm.associatedAllergen), denreeUsed: [], id: nil)
+        print(ig.associatedAllergen)
+        print(vm.associatedAllergen)
+       /* Task{
             //     await IngredientService.saveIngredient(ig)
         }
         print(associatedAllergen)

@@ -11,15 +11,18 @@ import Combine
 enum IntentStateRecipeCreate: CustomStringConvertible {
     case ready
     case stepAdded(Step)
-    
+    case denreeAdded(Denree)
     
     var description: String {
         switch self {
         case .ready:
             return "state : .ready"
         case .stepAdded(_):
-            return "state : .stepCreated(Data)"
+            return "state : .stepAdded(Data)"
+        case .denreeAdded(_):
+            return "state : .denreeAdded(Data)"
         }
+
     }
 }
 
@@ -29,10 +32,19 @@ class IntentRecipeCreate {
     func addObserver (viewModel: RecipeCreateStepListVM) {
         self.state.subscribe(viewModel)
     }
+    func addObserver (viewModel: RecipeDenreeCreateVM) {
+        self.state.subscribe(viewModel)
+    }
     
     func intentToCreate(step: Step) {
         //print(state)
         self.state.send(.stepAdded(step))
+        
+        self.state.send(.ready)
+    }
+    
+    func intentToCreate(denree: Denree) {
+        self.state.send(.denreeAdded(denree))
         
         self.state.send(.ready)
     }

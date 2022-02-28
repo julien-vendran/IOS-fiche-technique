@@ -50,12 +50,18 @@ struct createRecipe: View {
         if (recipeInStock.count > 0) {
             self.recipeChoosed = recipeInStock[0]
         }
+        print("On passe par le init")
+        self.listOfSteps.recipeOrStep_list = []
     }
     
     let col = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    func emptyListOfStep () -> Void {
+        self.listOfSteps.recipeOrStep_list = []
+    }
 
     var body: some View {
         Form {
@@ -123,11 +129,13 @@ struct createRecipe: View {
                     presentationMode.wrappedValue.dismiss()
                 }.disabled(!self.isFormValid)
                 Button("Annuler la création") {
+                    self.emptyListOfStep()
                     presentationMode.wrappedValue.dismiss()
                 }.foregroundColor(.red)
             }
         }
         .navigationTitle("Création d'une recette")
+        .navigationBarBackButtonHidden(true)
     }
 }
 

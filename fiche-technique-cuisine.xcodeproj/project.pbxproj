@@ -25,6 +25,8 @@
 		6F5ABC0127C9165B00B03138 /* IntentRecipeCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */; };
 		6F5ABC0327C92BC900B03138 /* RecipeCreateStepListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0227C92BC900B03138 /* RecipeCreateStepListVM.swift */; };
 		6F5ABC0827CA667D00B03138 /* IngredientListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0727CA667D00B03138 /* IngredientListVM.swift */; };
+		6F8E0E9327CD1F7100994BFD /* createDenree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9227CD1F7100994BFD /* createDenree.swift */; };
+		6F8E0E9527CD1FA600994BFD /* RecipeDenreeCreateVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */; };
 		6FC966BD27B54BA5006C33B4 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966BC27B54BA5006C33B4 /* Tests_iOS.swift */; };
 		6FC966BF27B54BA5006C33B4 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966BE27B54BA5006C33B4 /* Tests_iOSLaunchTests.swift */; };
 		6FC966C927B54BA5006C33B4 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC966C827B54BA5006C33B4 /* Tests_macOS.swift */; };
@@ -48,6 +50,7 @@
 		6FFC432727CAC9CD00915E90 /* DenreeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFC432627CAC9CD00915E90 /* DenreeService.swift */; };
 		6FFC432927CBADF100915E90 /* IntentIngredientCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFC432827CBADF100915E90 /* IntentIngredientCreate.swift */; };
 		6FFC432B27CBAF0D00915E90 /* IngredientCreateVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFC432A27CBAF0D00915E90 /* IngredientCreateVM.swift */; };
+		6FFC432F27CCE14500915E90 /* addAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFC432E27CCE14500915E90 /* addAllergen.swift */; };
 		B70F364D27C616E500068F4B /* readRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70F364C27C616E500068F4B /* readRecipe.swift */; };
 		B763C8AE27C4C91500C79DAF /* listAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763C8AD27C4C91500C79DAF /* listAllergen.swift */; };
 		B763C8B727C4DFB700C79DAF /* IntentListAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763C8B627C4DFB700C79DAF /* IntentListAllergen.swift */; };
@@ -94,6 +97,8 @@
 		6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentRecipeCreate.swift; sourceTree = "<group>"; };
 		6F5ABC0227C92BC900B03138 /* RecipeCreateStepListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreateStepListVM.swift; sourceTree = "<group>"; };
 		6F5ABC0727CA667D00B03138 /* IngredientListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListVM.swift; sourceTree = "<group>"; };
+		6F8E0E9227CD1F7100994BFD /* createDenree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createDenree.swift; sourceTree = "<group>"; };
+		6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDenreeCreateVM.swift; sourceTree = "<group>"; };
 		6FC966A427B54BA4006C33B4 /* fiche_technique_cuisineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fiche_technique_cuisineApp.swift; sourceTree = "<group>"; };
 		6FC966A527B54BA4006C33B4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6FC966A627B54BA5006C33B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,6 +124,7 @@
 		6FFC432627CAC9CD00915E90 /* DenreeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DenreeService.swift; sourceTree = "<group>"; };
 		6FFC432827CBADF100915E90 /* IntentIngredientCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentIngredientCreate.swift; sourceTree = "<group>"; };
 		6FFC432A27CBAF0D00915E90 /* IngredientCreateVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCreateVM.swift; sourceTree = "<group>"; };
+		6FFC432E27CCE14500915E90 /* addAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addAllergen.swift; sourceTree = "<group>"; };
 		B70F364C27C616E500068F4B /* readRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = readRecipe.swift; sourceTree = "<group>"; };
 		B763C8AD27C4C91500C79DAF /* listAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listAllergen.swift; sourceTree = "<group>"; };
 		B763C8B627C4DFB700C79DAF /* IntentListAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentListAllergen.swift; sourceTree = "<group>"; };
@@ -179,6 +185,7 @@
 				6F3D383927BD5DEC008C36CD /* listIngredient.swift */,
 				6F3D384327BE54A1008C36CD /* readIngredient.swift */,
 				6F2B958827C4C6290091F706 /* createIngredient.swift */,
+				6FFC432E27CCE14500915E90 /* addAllergen.swift */,
 			);
 			path = Ingredient;
 			sourceTree = "<group>";
@@ -347,6 +354,7 @@
 				B70F364C27C616E500068F4B /* readRecipe.swift */,
 				6F2B959127C660CE0091F706 /* createRecipe.swift */,
 				6F5ABBFE27C90FD100B03138 /* createStep.swift */,
+				6F8E0E9227CD1F7100994BFD /* createDenree.swift */,
 			);
 			name = Recipe;
 			sourceTree = "<group>";
@@ -406,6 +414,7 @@
 			children = (
 				B7DEF6E727C52972003A53BC /* RecipeListeVM.swift */,
 				6F5ABC0227C92BC900B03138 /* RecipeCreateStepListVM.swift */,
+				6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -577,7 +586,9 @@
 				6FC966F627BC46B5006C33B4 /* step.swift in Sources */,
 				6FC966F027BC1C61006C33B4 /* denree.swift in Sources */,
 				6F3D384A27BE7BDE008C36CD /* DenreeDTO.swift in Sources */,
+				6FFC432F27CCE14500915E90 /* addAllergen.swift in Sources */,
 				6F3D384227BE442E008C36CD /* urlSessionExtend.swift in Sources */,
+				6F8E0E9527CD1FA600994BFD /* RecipeDenreeCreateVM.swift in Sources */,
 				B7DEF6DE27C514E4003A53BC /* RecipeService.swift in Sources */,
 				6FC966ED27BC152F006C33B4 /* listRecipe.swift in Sources */,
 				B7DEF6E227C518F6003A53BC /* RecipeOrStepDTO.swift in Sources */,
@@ -591,6 +602,7 @@
 				6FC966E427BBF6A2006C33B4 /* cost.swift in Sources */,
 				6F5ABC0127C9165B00B03138 /* IntentRecipeCreate.swift in Sources */,
 				B763C8B727C4DFB700C79DAF /* IntentListAllergen.swift in Sources */,
+				6F8E0E9327CD1F7100994BFD /* createDenree.swift in Sources */,
 				B7DEF6E527C5245C003A53BC /* IntentRecipeList.swift in Sources */,
 				B763C8AE27C4C91500C79DAF /* listAllergen.swift in Sources */,
 				6FFC432B27CBAF0D00915E90 /* IngredientCreateVM.swift in Sources */,
