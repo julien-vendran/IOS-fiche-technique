@@ -71,8 +71,8 @@ class IngredientListVM : ObservableObject, Subscriber {
             if (ingredient != nil) {
                 print(ingredient!)
                 self.ingredient_list.append(ingredient!)
-            } else { //Erreur dans l'ajout de notre recette
-                print("Erreur dans la création de la recette")
+            } else { //Erreur dans l'ajout de notre ingredient
+                print("Erreur dans la création de l'ingredient'")
             }
         case .deleting:
             break

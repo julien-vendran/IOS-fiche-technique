@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct createIngredient: View {
-    
-    @State var name: String = ""
-    @State var unit: String = ""
-    @State var availableQuantity: Int = 0
-    @State var unitPrice: Double = 0
-    @State var associatedAllergen: Set<Allergen> = Set()
-    @State var listAllergen : [Allergen] = []
+    @ObservedObject var vm : IngredientCreateVM
+    var intent : IntentIngredientCreate
     @State var showAllergen : Bool = false
     var cols = [GridItem(.fixed(120)),GridItem(.flexible())]
+    @State private var selection = Set<Allergen>()
     
     // @Binding var showingSheet : Bool
     @Environment(\.presentationMode) var presentationMode
     
+    init(){
+        self.vm = IngredientCreateVM()
+        self.intent = IntentIngredientCreate()
+        self.intent.addObserver(viewModel: self.vm)
+    }
     
     
     var body: some View {
@@ -28,59 +29,58 @@ struct createIngredient: View {
             Form{
                 LazyVGrid(columns: cols){
                     Group{
-                        Text("Nom :"); TextField("nom ingredient",text: $name)
+                        Text("Nom :"); TextField("nom ingredient",text: $vm.name)
                     }
                     Group{
-                        Text("Unité :"); TextField("unité",text: $unit)
+                        Text("Unité :"); TextField("unité",text: $vm.unit)
                     }
                     Group{
-                        Text("Quantité disponible :"); TextField("",value: $availableQuantity, formatter: NumberFormatter())
+                        Text("Quantité disponible :"); TextField("",value: $vm.availableQuantity, formatter: NumberFormatter())
                     }
                     Group{
-                        Text("Prix unitaire :"); TextField("",value: $unitPrice,formatter: NumberFormatter())
+                        Text("Prix unitaire :"); TextField("",value: $vm.unitPrice,formatter: NumberFormatter())
                     }
                     Group{
                         Button("Choix allergen "){
                             showAllergen.toggle()
                         }
-                       
+                        
                     }.sheet(isPresented: $showAllergen){
-                      List(selection: $associatedAllergen) {
-                            ForEach(listAllergen, id: \.id){aler in
-                                Text("\(aler.name)")
-                             
+                     /*   List(selection: $vm.associatedAllergen) {
+                            ForEach(0..<vm.listAllergen.count, id: \.self) { index in
+                                Text("\(vm.listAllergen[index].name)")
                             }
-                          Text("\($listAllergen.count)")
-                        }.environment(\.editMode, .constant(EditMode.active))
+                         EditButton()
+                        }
+                      */
+                        VStack {
+                            List(vm.listAllergen, id: \.id, selection: $selection) { allergen in
+                                Text("\(allergen.name)")
+                            }
+                            EditButton()
+                        }
                     }
-                   
+                    
                 }
             }
         }.task {
-            do{
-                let decoded = try await AllergenService.getAllallergen()
-                //Pour chaque element dto on converti, compactMap =map mais plus simple
-                let maliste : [Allergen] = decoded.compactMap{ (dto: AllergenDTO) -> Allergen in
-                    return dto.allergen
-                }
-                self.listAllergen = maliste
-                print("alergen loaded \(maliste.count) \(listAllergen.count)")
-            }catch let error{
-                print(error.localizedDescription)
-            }
+            
+           // self.listAllergen = await AllergenService.getAllallergen()
+           await self.intent.intentToLoad()
+            
         }
     }
     
-    func validate(){
+    func validate(){/*
         let ig = Ingredient(name: name, unit: unit, availableQuantity: availableQuantity, unitPrice: unitPrice, associatedAllergen: Array(associatedAllergen), denreeUsed: [], id: nil)
         print(ig)
         Task{
-       //     await IngredientService.saveIngredient(ig)
+            //     await IngredientService.saveIngredient(ig)
         }
         print(associatedAllergen)
         print("on valide")
         // showingSheet.toggle()
-        presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()*/
     }
 }
 /*

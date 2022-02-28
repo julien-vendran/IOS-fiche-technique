@@ -1,0 +1,73 @@
+//
+//  StepService.swift
+//  fiche-technique-cuisine (iOS)
+//
+//  Created by m1 on 26/02/2022.
+//
+
+import Foundation
+
+class StepService {
+    
+    private static var url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/step")
+    
+    static func createStepDTO(_ step: Step) -> StepDTO {
+        
+        let list_denree: [DenreeDTO] = step.denreeUsed.compactMap {
+            (d: Denree) -> DenreeDTO in
+            return DenreeService.createDenreeDTO(d)
+        }
+        
+        let step_dto: StepDTO = StepDTO(id: step.id, name: step.name, description: step.description, duration: step.duration, denreeUsed: list_denree)
+        return step_dto
+    }
+    
+    /**
+     Enregistre les denrées en base de données, met à jour le tableau de denrées et de nos steps puis va retourner notre step mise à jour
+     */
+    static func saveDenreeFromStep(_ step: Step) async -> Step {
+        print("On commence la sauvegarde de denrée")
+        let s: Step = step
+        for i: Int in 0..<step.denreeUsed.count { //Pour chaque denrée
+            //On l'enregistre en BD
+            let denree_tmp: Denree? = await DenreeService.createDenree(step.denreeUsed[i])
+
+            if (denree_tmp != nil) { //Si l'enregistrement s'est bien passé
+                s.denreeUsed[i].id = denree_tmp!.id //On met à jour l'id de notre denrée pour notre step
+            } else {
+                //Gérer l'erreur d'ajout d'une denrée
+            }
+        }
+        return s //On retourne notre nouvelle étape tout propre
+    }
+    
+    static func createStep(step: Step) async -> Step? {
+        print("On commence à créer l'étape \(step.name)")
+        if let url_back = self.url {
+            var request = URLRequest(url: url_back)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            //D'abord, on enregistre nos denrées en BD
+            let new_Step: Step = await StepService.saveDenreeFromStep(step)
+            
+            let step_dto: StepDTO = StepService.createStepDTO(new_Step)
+            
+            do {
+                let encoded = try JSONEncoder().encode(step_dto)
+                let addedValue = try await URLSession.shared.upload(for: request, from: encoded)
+                let addedStep: StepDTO? = JSONHelpler.decode(data: addedValue.0)
+                if (addedStep != nil) {
+                    print("On retourne notre étape sans erreur")
+                    return addedStep!.step
+                } else {
+                    return nil
+                }
+
+            } catch let error {
+                print(error)
+            }
+        }
+        return nil
+    }
+}

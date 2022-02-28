@@ -35,8 +35,10 @@ class IngredientService {
                 output = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
                     return dto.ingredient
                 }
+     
             }
         }catch let error{
+
             print(error.localizedDescription)
         }
         return output
@@ -46,7 +48,7 @@ class IngredientService {
         if let url = URL(string: url_back){
             var request = URLRequest(url: url)
             request.addValue("application/json", forHTTPHeaderField:"Content-Type")
-            let dto = IngredientDTO(id: nil, name: ingr.name, unit: ingr.unit, availableQuantity: ingr.availableQuantity, unitPrice: ingr.unitPrice, associatedAllergen: [], denreeUsed:[])
+            let dto = IngredientDTO(id: nil, name: ingr.name, unit: ingr.unit, availableQuantity: ingr.availableQuantity, unitPrice: ingr.unitPrice, associatedAllergen: []/*, denreeUsed:[]*/)
             request.httpMethod = "POST"
             do{
                 

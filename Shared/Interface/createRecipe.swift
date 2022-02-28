@@ -116,7 +116,7 @@ struct createRecipe: View {
             
             Section {
                 Button("Valider la création") {
-                    let r: Recipe = Recipe(name: self.name, responsable: self.responsable, nbOfCover: self.nbOfCover, category: self.category, listOfStep: [], id: nil)
+                    let r: Recipe = Recipe(name: self.name, responsable: self.responsable, nbOfCover: self.nbOfCover, category: self.category, listOfStep: self.listOfSteps.recipeOrStep_list, id: nil)
                     Task {
                         await self.recipeIntent.intentToCreate(recipe: r)
                     }

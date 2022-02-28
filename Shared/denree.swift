@@ -11,13 +11,13 @@ class Denree {
     
     var id: Int?
     var quantity: Double
-    var ingredient: Ingredient
-    var step: Step
+    var ingredient: Ingredient?
+    var step: Step?
     
     init (
         quantity qte: Double,
-        ingredient ingre: Ingredient,
-        step: Step,
+        ingredient ingre: Ingredient?,
+        step: Step?,
         id: Int?
     ) {
         self.id = id
