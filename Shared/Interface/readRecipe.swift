@@ -25,7 +25,15 @@ enum Informations_tab: String, CustomStringConvertible, CaseIterable, Identifiab
 struct ReadRecipe: View {
     var recipe: Recipe
     @State var currentTab: Informations_tab = .ingredient
-
+    @ObservedObject var vm : RecipeReadVM
+    var intent : IntentRecipeRead
+    init(recipe: Recipe){
+        self.recipe = recipe
+        self.vm = RecipeReadVM(step: [])
+        self.intent = IntentRecipeRead()
+        self.intent.addObserver(viewModel: self.vm)
+        
+    }
     var body: some View {
         VStack() {
             Text("\(recipe.name)")
@@ -37,6 +45,11 @@ struct ReadRecipe: View {
             }
             .pickerStyle(.segmented)
         }.padding()
+            .task {
+                print("loagin)")
+               await self.intent.intentToLoad(idRecipe: recipe.id!)
+                print("loded")
+            }
     }
 }
 

@@ -29,3 +29,25 @@ struct RecipeDTO: Decodable, Encodable {
         return Recipe(name: self.name, responsable: self.responsable, nbOfCover: self.nbOfCover, category: self.category, listOfStep: list_recipe, id: self.id)
     }
 }
+
+struct READRecipeDTO: Decodable, Encodable {
+    
+    var id : Int?
+    var name : String
+    var responsable : String
+    var nbOfCover : Int
+    var category : String
+    var listOfSteps : [READRecipeOrStepDTO]
+    //var parents :  RecipeDTO
+    
+    var recipe: Recipe {
+        
+       /* let list_recipe : [RecipeOrStep] = self.listOfSteps.compactMap {
+            (dto: RecipeOrStepDTO) -> RecipeOrStep in
+                return dto.recipeOrStep
+        }*/
+        let list_recipe: [RecipeOrStep] = []
+        
+        return Recipe(name: self.name, responsable: self.responsable, nbOfCover: self.nbOfCover, category: self.category, listOfStep: list_recipe, id: self.id)
+    }
+}

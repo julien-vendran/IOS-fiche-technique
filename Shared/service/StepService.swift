@@ -9,7 +9,23 @@ import Foundation
 
 class StepService {
     
-    private static var url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/step")
+    private static var url_back =  "https://fiche-technique-cuisine-back.herokuapp.com/step"
+    private static var url = URL(string: url_back)
+    
+    public static func getStep(id : Int) async  -> Step? {
+        var output : Step? = nil
+        do{
+            if let url = URL(string: url_back+"\(id)"){
+                let decoded : StepDTO = try await URLSession.shared.getJSON(from: url)
+                //Pour chaque element dto on converti, compactMap =map mais plus simple
+                output = decoded.step
+                
+            }
+        }catch let error{
+            print(error.localizedDescription)
+        }
+        return output
+    }
     
     static func createStepDTO(_ step: Step) -> StepDTO {
         

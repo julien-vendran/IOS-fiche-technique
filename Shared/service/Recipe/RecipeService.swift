@@ -8,8 +8,8 @@
 import Foundation
 
 class RecipeService {
-    
-    private static var url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/recipe")
+    private static var url_back = "https://fiche-technique-cuisine-back.herokuapp.com/recipe/"
+    private static var url = URL(string: url_back)
     
     static func createRecipeDTO (_ recipe: Recipe) -> RecipeDTO {
         let list_recipe_or_step: [RecipeOrStepDTO] = recipe.listOfStep.compactMap {
@@ -59,6 +59,49 @@ class RecipeService {
                 print(error)
         }
         return []
+    }
+    
+    static func readStepsOfRecipe(id: Int) async -> [Step]{
+        var output : [Step] = []
+        print("------------------------------")
+        do{
+            if let url = URL(string:url_back+"\(id)"){
+                let decoded : READRecipeOrStepDTO = try await URLSession.shared.getJSON(from: url)
+                //Pour chaque element dto on converti, compactMap =map mais plus simple
+                if(decoded.isRecipe){
+                    print("recipe : \(decoded.id!)")
+                    if let recip = await readRecipe(id: decoded.id!){
+                        for step in recip.listOfSteps{
+                          await  output+=readStepsOfRecipe(id: step.id!)
+                        }
+                    }
+                        
+                }else{
+                    print("step :  \(decoded.id!)")
+                    if let step = await StepService.getStep(id:decoded.id!){
+                        output.append(step)
+                    }
+                }
+                
+                
+            }
+        }catch let error{
+            print(error)
+        }
+        print("readStepsOfRecipe \(output)")
+        return output
+    }
+    
+    private static func readRecipe(id: Int) async -> READRecipeDTO?{
+        var output : READRecipeDTO? = nil
+        do{
+            if let url = URL(string:url_back+"\(id)"){
+                output = try await URLSession.shared.getJSON(from: url)
+            }
+        }catch let error{
+            print(error.localizedDescription)
+        }
+        return output
     }
     
     static func createRecipe(recipe: Recipe) async -> Recipe? {

@@ -32,6 +32,10 @@ class RecipeDenreeCreateVM: ObservableObject, Subscriber {
         self.denree_list.append(el)
     }
     
+    func setUp(denrees: [Denree]) {
+        self.denree_list = denrees
+    }
+    
     //Activé à chaque send -> Cette partie est utilisée pour la gestion des états de la page (State)
     typealias Input = IntentStateRecipeCreate
     

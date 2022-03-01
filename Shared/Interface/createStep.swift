@@ -16,12 +16,14 @@ struct CreateStep: View {
     @State var name: String = ""
     @State var description: String = "Entrez la description de votre recette"
     @State var duration: Double = 0.0
-    //@State var denreeUsed: [Denree] = []
     @ObservedObject var denreeUsed: RecipeDenreeCreateVM = RecipeDenreeCreateVM()
     let col = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    var stepToUpdate: Step?
+    @State var updateMode: Bool = false
     
     var isValid: Bool {
         if (self.name == "") {
@@ -33,9 +35,10 @@ struct CreateStep: View {
         return true
     }
     
-    init (stepIntent: IntentRecipeCreate) {
+    init (stepIntent: IntentRecipeCreate, step: Step? = nil) {
         self.stepIntent = stepIntent
         self.stepIntent.addObserver(viewModel: self.denreeUsed)
+        self.stepToUpdate = step
     }
     
     var body: some View {
@@ -63,10 +66,14 @@ struct CreateStep: View {
                         .overlay(Text("Liste d'ingrédients"), alignment: .leading)
             ) {
                 List {
-                    ForEach(self.denreeUsed.denree_list, id:\.id) { d in
-                        let i: Ingredient = d.ingredient!
-                        let qte: String = String(format: "%.2f", d.quantity)
-                        Text("\(i.name) (\(qte) \(i.unit))")
+                    ForEach(0..<self.denreeUsed.count, id:\.self) { id in
+                        VStack {
+                            NavigationLink(destination: CreateDenree(intent: self.stepIntent, denreeToUpdate: self.denreeUsed[id])) {
+                                let i: Ingredient = self.denreeUsed[id].ingredient!
+                                let qte: String = String(format: "%.2f", self.denreeUsed[id].quantity)
+                                Text("\(i.name) (\(qte) \(i.unit))")
+                            }
+                        }
                     }
                     .onDelete() { indexSet in //TODO : Est ce qu'on fait une fonction de la VM pour éviter d'aller chercher ses attributs ?
                         self.denreeUsed.denree_list.remove(atOffsets: indexSet)
@@ -83,21 +90,43 @@ struct CreateStep: View {
                 }
             }
             Section() {
-                Button("Ajouter étape") {
-                    if (self.description == placeholderString) {
-                        self.description = ""
+                if (!self.updateMode) {
+                    Button("Ajouter l'étape") {
+                        if (self.description == placeholderString) {
+                            self.description = ""
+                        }
+                        let s: Step = Step(name: self.name, description: self.description, duration: self.duration, denreeUsed: self.denreeUsed.denree_list, id: nil)
+                        self.stepIntent.intentToCreate(step: s)
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    let s: Step = Step(name: self.name, description: self.description, duration: self.duration, denreeUsed: self.denreeUsed.denree_list, id: nil)
-                    self.stepIntent.intentToCreate(step: s)
-                    presentationMode.wrappedValue.dismiss()
+                    .disabled(!self.isValid)
+                } else {
+                    Button("Modifier l'étape") {
+                        if (self.description == placeholderString) {
+                            self.description = ""
+                        }
+                        self.stepToUpdate?.name = self.name
+                        self.stepToUpdate?.description = self.description
+                        self.stepToUpdate?.duration = self.duration
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    .disabled(!self.isValid)
                 }
-                .disabled(!self.isValid)
                 Button("Annuler l'ajout de l'étape") {
                     presentationMode.wrappedValue.dismiss()
                 }.foregroundColor(.red)
             }
         }
         .navigationTitle("Ajout d'une étape")
+        .onAppear {
+            if (self.stepToUpdate != nil) {
+                self.updateMode = true
+                self.name = self.stepToUpdate!.name
+                self.description = self.stepToUpdate!.description
+                self.duration = self.stepToUpdate!.duration
+                denreeUsed.setUp(denrees: self.stepToUpdate!.denreeUsed)
+            }
+        }
     }
 }
 
