@@ -26,6 +26,23 @@ class StepService {
         }
         return output
     }
+    public static func getAllStep() async  -> [Step]{
+        var output : [Step] = []
+        do{
+            if let url = URL(string: url_back){
+                let decoded : [StepDTO] = try await URLSession.shared.getJSON(from: url)
+                //Pour chaque element dto on converti, compactMap =map mais plus simple
+                output = decoded.compactMap{ (dto: StepDTO) -> Step in
+                    return dto.step
+                }
+     
+            }
+        }catch let error{
+
+            print(error.localizedDescription)
+        }
+        return output
+    }
     
     static func createStepDTO(_ step: Step) -> StepDTO {
         

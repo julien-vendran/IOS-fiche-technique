@@ -31,5 +31,13 @@ class Recipe: RecipeOrStep, ObservableObject {
         super.init(name: name, id: id)
     }
     
+    override func getSteps() -> [Step] {
+        var steps : [Step] = []
+        for r in listOfStep{
+            steps+=r.getSteps()
+        }
+        return steps
+    }
+    
 }
 

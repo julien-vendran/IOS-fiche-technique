@@ -7,12 +7,15 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 enum IntentStateRecipeList: CustomStringConvertible {
     case ready
     case loading
     case load
     case loaded([Recipe])
+    
+    case loadedStep([Step])
     
     case adding
     case added(Recipe?)
@@ -31,6 +34,8 @@ enum IntentStateRecipeList: CustomStringConvertible {
             return "state : .adding"
         case .added(_):
             return "state : .added"
+        case .loadedStep(_):
+            return "state : .loaddedStep(data)"
         }
     }
 }
@@ -44,9 +49,14 @@ class IntentRecipeList {
     
     func intentToLoad() async {
         self.state.send(.loading)
-        let data: [Recipe] = await RecipeService.getAllRecipe()
+        async let r: [Recipe] =  RecipeService.getAllRecipe()
+        async let s : [Step] = StepService.getAllStep()
+        let recipes  = await r
+        let steps = await s
+        
         DispatchQueue.main.async {
-            self.state.send(.loaded(data))
+            self.state.send(.loaded(recipes))
+            self.state.send(.loadedStep(steps))
         }
         self.state.send(.ready)
     }

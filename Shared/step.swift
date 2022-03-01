@@ -24,4 +24,8 @@ class Step: RecipeOrStep {
         self.denreeUsed = denreeUsed
         super.init(name: name, id: id)
     }
+    
+    override func getSteps() -> [Step] {
+        return [self]
+    }
 }

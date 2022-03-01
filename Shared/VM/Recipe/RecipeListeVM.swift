@@ -11,7 +11,7 @@ import Combine
 class RecipeListeVM: ObservableObject, Subscriber {
     
     @Published var associated_recipe_list: [Recipe]
-    
+    @Published var step_list : [Step] //TODO a voir où le mettre plus tard
     var count: Int {
         return self.associated_recipe_list.count
     }
@@ -21,6 +21,7 @@ class RecipeListeVM: ObservableObject, Subscriber {
     
     init (recipe: [Recipe]) {
         self.associated_recipe_list = recipe
+        self.step_list = []
     }
     
     //Fonction utiles
@@ -46,6 +47,7 @@ class RecipeListeVM: ObservableObject, Subscriber {
         
         switch input {
         case .ready: //On a rien à faire
+            
             break
         case .load: //Notre view nous demande de charger des données
             break
@@ -64,7 +66,59 @@ class RecipeListeVM: ObservableObject, Subscriber {
             } else { //Erreur dans l'ajout de notre recette
                 print("Erreur dans la création de la recette")
             }
+        case .loadedStep(let data):
+            self.step_list = data
+            print("Step loaded")
+            if (step_list.isEmpty==false && associated_recipe_list.isEmpty==false){
+                print("les deux listes sont chargée {recettes : \(associated_recipe_list.count), steps: \(step_list.count) }")
+                buildRecipe()
+                print("builded")
+                print(associated_recipe_list[0].listOfStep)
+            }
         }
         return .none
+    }
+    
+    private func find(id : Int) -> RecipeOrStep? {
+        if let recipe = findRecipe(id: id){
+            return recipe
+        }
+        if let step = findStep(id: id){
+            return step
+        }
+        
+        print("PROBLEME FIND RECIP")
+        return nil
+        
+    }
+    
+    private func findRecipe(id: Int) -> Recipe?{
+        
+        for r in associated_recipe_list{
+            if r.id==id {
+                return r
+            }
+        }
+        
+        return nil
+    }
+    
+    private func findStep(id: Int) -> Step?{
+        for s in step_list {
+            if s.id==id{
+                return s
+            }
+        }
+        return nil
+    }
+    
+    private func buildRecipe(){
+        for recette in associated_recipe_list{
+            for i in 0...recette.listOfStep.count-1{
+                if let recipeOrStep = find(id: recette.listOfStep[i].id!){
+                    recette.listOfStep[i] = recipeOrStep
+                }
+            }
+        }
     }
 }

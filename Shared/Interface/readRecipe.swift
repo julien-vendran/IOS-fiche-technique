@@ -29,7 +29,7 @@ struct ReadRecipe: View {
     var intent : IntentRecipeRead
     init(recipe: Recipe){
         self.recipe = recipe
-        self.vm = RecipeReadVM(step: [])
+        self.vm = RecipeReadVM(step: recipe.getSteps())
         self.intent = IntentRecipeRead()
         self.intent.addObserver(viewModel: self.vm)
         
@@ -38,6 +38,11 @@ struct ReadRecipe: View {
         VStack() {
             Text("\(recipe.name)")
                 .font(.title)
+            List {
+                ForEach((0..<self.vm.steps.count), id: \.self) { i in
+                    Text("\(vm.steps[i].name)")
+                }
+            }
             Picker("", selection: $currentTab) {
                 ForEach(Informations_tab.allCases) { info in
                     Text(info.rawValue)
@@ -47,7 +52,7 @@ struct ReadRecipe: View {
         }.padding()
             .task {
                 print("loagin)")
-               await self.intent.intentToLoad(idRecipe: recipe.id!)
+            //   await self.intent.intentToLoad(idRecipe: recipe.id!)
                 print("loded")
             }
     }
