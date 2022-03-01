@@ -55,6 +55,8 @@ class RecipeDenreeCreateVM: ObservableObject, Subscriber {
             break
         case .denreeAdded(let denree):
             self.append(denree)
+        case .cancel:
+            self.denree_list = []
         }
         return .none
     }

@@ -12,6 +12,7 @@ enum IntentStateRecipeCreate: CustomStringConvertible {
     case ready
     case stepAdded(Step)
     case denreeAdded(Denree)
+    case cancel
     
     var description: String {
         switch self {
@@ -21,8 +22,9 @@ enum IntentStateRecipeCreate: CustomStringConvertible {
             return "state : .stepAdded(Data)"
         case .denreeAdded(_):
             return "state : .denreeAdded(Data)"
+        case .cancel:
+            return "state : .cancel"
         }
-
     }
 }
 
@@ -46,6 +48,10 @@ class IntentRecipeCreate {
     func intentToCreate(denree: Denree) {
         self.state.send(.denreeAdded(denree))
         
+        self.state.send(.ready)
+    }
+    func intentToCancel() {
+        self.state.send(.cancel)
         self.state.send(.ready)
     }
 }

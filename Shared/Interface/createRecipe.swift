@@ -58,10 +58,6 @@ struct createRecipe: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
-    func emptyListOfStep () -> Void {
-        self.listOfSteps.recipeOrStep_list = []
-    }
 
     var body: some View {
         Form {
@@ -129,7 +125,7 @@ struct createRecipe: View {
                     presentationMode.wrappedValue.dismiss()
                 }.disabled(!self.isFormValid)
                 Button("Annuler la création") {
-                    self.emptyListOfStep()
+                    self.stepIntent.intentToCancel()
                     presentationMode.wrappedValue.dismiss()
                 }.foregroundColor(.red)
             }

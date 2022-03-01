@@ -64,10 +64,11 @@ struct CreateStep: View {
             ) {
                 List {
                     ForEach(self.denreeUsed.denree_list, id:\.id) { d in
-                        //TODO: Refaire ça proprement
-                        Text("Test ingrédient : \(d.quantity)")
+                        let i: Ingredient = d.ingredient!
+                        let qte: String = String(format: "%.2f", d.quantity)
+                        Text("\(i.name) (\(qte) \(i.unit))")
                     }
-                    .onDelete() { indexSet in
+                    .onDelete() { indexSet in //TODO : Est ce qu'on fait une fonction de la VM pour éviter d'aller chercher ses attributs ?
                         self.denreeUsed.denree_list.remove(atOffsets: indexSet)
                     }
                     .onMove{ indexSet, index in

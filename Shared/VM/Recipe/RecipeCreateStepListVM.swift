@@ -56,6 +56,8 @@ class RecipeCreateStepListVM: ObservableObject, Subscriber {
             print(self.recipeOrStep_list)
         case .denreeAdded(_):
             break
+        case .cancel:
+            self.recipeOrStep_list = []
         }
         return .none
     }

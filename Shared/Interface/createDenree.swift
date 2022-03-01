@@ -10,11 +10,13 @@ import SwiftUI
 struct CreateDenree: View {
     var intentDenree: IntentRecipeCreate
     @State var quantity: Double = 0.0
-    @State var ingredient_id: Int? = nil
-    var ingredients: [Ingredient] = []
+    @State private var ingredient_id: Int = 0
+    @State var ingredients: [Ingredient] = []
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var list_ingredients_id: [Int] {
-        return []
+        return [1, 2, 3]
     }
     
     let col = [
@@ -24,35 +26,50 @@ struct CreateDenree: View {
     
     init(intent: IntentRecipeCreate) {
         self.intentDenree = intent
-        Task { //Le passer en paramètre ça sera plus simple
-            //self.ingredients = await IngredientService.getAllIngredient()
-        }
     }
     var body: some View {
         Form {
             Section(header: Text("Informations")) {
-                LazyVGrid(columns: col) {
+                LazyVGrid(columns: col, alignment: .leading) {
                     Text("Quantité :")
-                    TextField("", value: self.$quantity, format: .number)
-                    
-                    Text("Ingrédient : ")
-                    Picker("", selection: self.$ingredient_id) {
-                        
+                    HStack {
+                        TextField("", value: self.$quantity, format: .number)
+                        if (self.ingredients.count > 0 && self.ingredient_id >= 0 && self.ingredient_id < self.ingredients.count) {
+                            Text("\(self.ingredients[ingredient_id].unit)")
+                        }
                     }
-                    .pickerStyle(WheelPickerStyle())
                 }
+                Text("Ingrédient : ")
+                Picker("Ingrédien", selection: self.$ingredient_id, content: {
+                    ForEach(0..<self.ingredients.count, id:\.self) { id in
+                        Text("\(self.ingredients[id].name)").tag(id)
+                    }
+                })
+                .pickerStyle(WheelPickerStyle())
+                .padding(1)
             }
             Section(header: Text("Boutons")) {
-                Button("TEST ajout denrée") {
-                    self.intentDenree.intentToCreate(denree: Denree(quantity: self.quantity, ingredient: nil, step: nil, id: nil))
+                Button("Ajouter l'ingrédient") {
+                    self.intentDenree.intentToCreate(denree: Denree(quantity: self.quantity, ingredient: self.ingredients[self.ingredient_id], step: nil, id: nil))
+                    presentationMode.wrappedValue.dismiss()
                 }
+                Button("Annuler l'ajout") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .foregroundColor(.red)
             }
         }
+        .task {
+            //TODO: Le passer en paramètre ce sera mieux
+            self.ingredients = await IngredientService.getAllIngredient()
+            self.ingredients = self.ingredients.sorted(by: {$0.name < $1.name})
+        }
+        .navigationTitle("Ajout d'un ingrédient")
     }
 }
 
-/*struct createDenree_Previews: PreviewProvider {
+struct createDenree_Previews: PreviewProvider {
     static var previews: some View {
-        createDenree()
+        CreateDenree(intent: IntentRecipeCreate())
     }
-}*/
+}
