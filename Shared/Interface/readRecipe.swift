@@ -40,7 +40,7 @@ struct ReadRecipe: View {
                 .font(.title)
             List {
                 ForEach((0..<self.vm.steps.count), id: \.self) { i in
-                    Text("\(vm.steps[i].name)")
+                    ReadStep(step: self.vm.steps[i])
                 }
             }
             Picker("", selection: $currentTab) {

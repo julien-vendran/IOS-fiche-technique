@@ -11,7 +11,6 @@ struct listIngredient: View {
     @ObservedObject var vm: IngredientListVM
     var intent: IntentIngredientList
     @State var ingredients : [Ingredient]
-    @State var showingCreateSheet	: Bool = false
     @State var currentIngredient : Ingredient? = nil
     
     init() {
@@ -48,14 +47,12 @@ struct listIngredient: View {
                     
                 }.sheet(item: $currentIngredient) { ing in
                     ReadIngredient(ingredient: ing)
-                }.sheet(isPresented: $showingCreateSheet){
-                    createIngredient()
                 }
                 //    EditButton()
                 
                 
             }
-            
+            .navigationTitle("Liste d'ingrédients")
             .task {
                 if(self.vm.isEmpty){
                     await self.intent.intentToLoad()
@@ -68,16 +65,14 @@ struct listIngredient: View {
                     EditButton()
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        showingCreateSheet.toggle()
-                       
-                    }) {
+                    NavigationLink(destination: CreateIngredient()) {
                         Image(systemName: "plus")
                     }
+                    
                 }
             }
         }
-        
+        .navigationTitle("Liste d'ingrédients")
     }
 }
 

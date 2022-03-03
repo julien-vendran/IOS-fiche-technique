@@ -33,7 +33,14 @@ class RecipeDenreeCreateVM: ObservableObject, Subscriber {
     }
     
     func setUp(denrees: [Denree]) {
-        self.denree_list = denrees
+        self.denree_list = []
+        for d in denrees {
+            print("Ajout d'une denrée : \(d.ingredient!.name)")
+            self.append(d)
+            print("\(self.denree_list)")
+        }
+        print("MAJ denrée : \(denrees)")
+        print("Nouvelles : \(self.denree_list)")
     }
     
     //Activé à chaque send -> Cette partie est utilisée pour la gestion des états de la page (State)

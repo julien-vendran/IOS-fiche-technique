@@ -23,6 +23,7 @@ struct CreateStep: View {
     ]
     
     var stepToUpdate: Step?
+    @State var updated: Bool = false
     @State var updateMode: Bool = false
     
     var isValid: Bool {
@@ -39,6 +40,12 @@ struct CreateStep: View {
         self.stepIntent = stepIntent
         self.stepIntent.addObserver(viewModel: self.denreeUsed)
         self.stepToUpdate = step
+        
+        if (self.stepToUpdate != nil) {
+            self.updateMode = true
+            denreeUsed.setUp(denrees: self.stepToUpdate!.denreeUsed)
+            print("Etat liste : \(self.denreeUsed.denree_list)")
+        }
     }
     
     var body: some View {
@@ -75,7 +82,7 @@ struct CreateStep: View {
                             }
                         }
                     }
-                    .onDelete() { indexSet in //TODO : Est ce qu'on fait une fonction de la VM pour éviter d'aller chercher ses attributs ?
+                    .onDelete() { indexSet in //TODO : Est ce qu'on fait une fonction dans la VM pour éviter d'aller chercher ses attributs ?
                         self.denreeUsed.denree_list.remove(atOffsets: indexSet)
                     }
                     .onMove{ indexSet, index in
@@ -90,7 +97,7 @@ struct CreateStep: View {
                 }
             }
             Section() {
-                if (!self.updateMode) {
+                if (self.stepToUpdate == nil) {
                     Button("Ajouter l'étape") {
                         if (self.description == placeholderString) {
                             self.description = ""
@@ -119,12 +126,11 @@ struct CreateStep: View {
         }
         .navigationTitle("Ajout d'une étape")
         .onAppear {
-            if (self.stepToUpdate != nil) {
-                self.updateMode = true
+            if (self.stepToUpdate != nil && !self.updated) {
+                self.updated = true
                 self.name = self.stepToUpdate!.name
                 self.description = self.stepToUpdate!.description
                 self.duration = self.stepToUpdate!.duration
-                denreeUsed.setUp(denrees: self.stepToUpdate!.denreeUsed)
             }
         }
     }

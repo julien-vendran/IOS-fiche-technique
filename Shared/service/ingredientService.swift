@@ -48,7 +48,10 @@ class IngredientService {
         if let url = URL(string: url_back){
             var request = URLRequest(url: url)
             request.addValue("application/json", forHTTPHeaderField:"Content-Type")
-            let dto = IngredientDTO(id: nil, name: ingr.name, unit: ingr.unit, availableQuantity: ingr.availableQuantity, unitPrice: ingr.unitPrice, associatedAllergen: []/*, denreeUsed:[]*/)
+            let associatedAllergenDTO = ingr.associatedAllergen.compactMap{ (al : Allergen) -> AllergenDTO in
+                return AllergenDTO(id_Allergen: al.id, allergen_name: al.name)
+            }
+            let dto = IngredientDTO(id: nil, name: ingr.name, unit: ingr.unit, availableQuantity: ingr.availableQuantity, unitPrice: ingr.unitPrice, associatedAllergen: associatedAllergenDTO /*, denreeUsed:[]*/)
             request.httpMethod = "POST"
             do{
                 

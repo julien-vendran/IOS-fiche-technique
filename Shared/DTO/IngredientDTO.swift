@@ -20,5 +20,17 @@ struct IngredientDTO : Codable{
     var ingredient : Ingredient { //TODO: Gérer l'utilisation des allergènes ^Coucou arnaud^ -> en cousr ouai)
         return Ingredient(name: self.name, unit: self.unit, availableQuantity: self.availableQuantity, unitPrice: self.unitPrice, associatedAllergen: [], denreeUsed: [], id: self.id)
     }
+}
+
+struct IngredientDenreeDTO : Codable {
+    var id: Int?
+    var name: String
+    var unit: String
+    var availableQuantity: Int
+    var unitPrice: Double
+ 
     
+    var ingredient : Ingredient {
+        return Ingredient(name: self.name, unit: self.unit, availableQuantity: self.availableQuantity, unitPrice: self.unitPrice, associatedAllergen: [], denreeUsed: [], id: self.id)
+    }
 }

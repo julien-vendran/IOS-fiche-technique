@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DenreeDTO : Decodable, Encodable {
+struct DenreeDTO : Codable {
     var id: Int?
     var quantity: Double
     var ingredient: IngredientDTO?
@@ -32,4 +32,20 @@ struct DenreeDTO : Decodable, Encodable {
         self.ingredient = ingredient
         self.step = step
     }
+}
+
+struct DenreeReadDTO : Codable {
+    var id: Int?
+    var quantity: Double
+    var ingredient: IngredientDenreeDTO
+    
+    var denree: Denree {
+        return Denree(
+            quantity: self.quantity,
+            ingredient: self.ingredient.ingredient,
+            step: nil,
+            id: self.id)
+    }
+    
+ 
 }

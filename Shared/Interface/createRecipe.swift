@@ -24,6 +24,8 @@ struct createRecipe: View {
     @State var category: String = ""
     @ObservedObject var listOfSteps: RecipeCreateStepListVM = RecipeCreateStepListVM()
     
+    @State private var recipeToAdd: Int  = 0
+    
     var isFormValid: Bool {
         if (self.name == "") {
             return false
@@ -93,19 +95,24 @@ struct createRecipe: View {
                         Text(self.recipeInStock[id])
                     }
                 }*/
-                Button("Ajouter une recette") {
-                    print("Ajout d'une recette")
-                    self.listOfSteps.append(Recipe(name: "", responsable: "", nbOfCover: 0, category: "", listOfStep: [], id: nil))
+                Picker(selection: $recipeToAdd, label: Text("Recette")) {
+                    ForEach(0..<self.recipeInStock.count) { idRecipe in
+                        Text("\(self.recipeInStock[idRecipe].name)").tag(idRecipe)
+                    }
+                }.onChange(of: recipeToAdd) { tag in
+                    self.listOfSteps.append(self.recipeInStock[self.recipeToAdd])
                 }
                 List {
                     ForEach(0..<self.listOfSteps.count, id: \.self) { idSOR in
                         if (self.listOfSteps[idSOR] is Step) {
                             NavigationLink(destination: CreateStep(stepIntent: self.stepIntent, step: self.listOfSteps[idSOR] as! Step)) {
-                                Text("\(self.listOfSteps[idSOR].name)")
+                                let s: Step = self.listOfSteps[idSOR] as! Step
+                                Text("\(s.name): \(s.duration) minutes")
                             }
                         }
                         else {
-                            Text("Nouvelle Recette")
+                            Text("[Recette] \(self.listOfSteps[idSOR].name)")
+                                .foregroundColor(.gray)
                         }
                         //Text("Recette : \(idSOR)")
                     }

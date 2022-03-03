@@ -9,7 +9,26 @@ import Foundation
 
 class DenreeService {
     
-    private static var url = URL(string: "https://fiche-technique-cuisine-back.herokuapp.com/denree")
+    private static var url_back = "https://fiche-technique-cuisine-back.herokuapp.com/denree/"
+    private static var url = URL(string: url_back)
+    
+    
+    public static func getDenree(id : Int) async  -> Denree? {
+        var output : Denree? = nil
+        do{
+            if let url = URL(string: url_back+"\(id)"){
+                let decoded : DenreeReadDTO = try await URLSession.shared.getJSON(from: url)
+                //Pour chaque element dto on converti, compactMap =map mais plus simple
+                output = decoded.denree
+                
+            }
+        }catch let error{
+            print("ERRORRRRRRRRRRRRRRRRRRRRRRRRrrr")
+            print(error)
+        }
+        print("yes !!!!!!!!!!! \(output)")
+        return output
+    }
     
     static func createDenreeDTO(_ denree: Denree) -> DenreeDTO { //Initialise dto.step à nil
         let denree_i: Ingredient = denree.ingredient!

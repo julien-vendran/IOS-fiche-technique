@@ -53,7 +53,6 @@ struct CreateDenree: View {
                 })
                 .pickerStyle(WheelPickerStyle())
                 .padding(1)
-                Text("Ingrédient sélectionné : \(self.ingredient_id)")
             }
             Section(header: Text("Boutons")) {
                 if (!self.updateMode) { //on veut ajouter
