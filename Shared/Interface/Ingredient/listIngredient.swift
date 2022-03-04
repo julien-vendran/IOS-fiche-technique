@@ -10,11 +10,9 @@ import SwiftUI
 struct listIngredient: View {
     @ObservedObject var vm: IngredientListVM
     var intent: IntentIngredientList
-    @State var ingredients : [Ingredient]
-    @State var currentIngredient : Ingredient? = nil
     
     init() {
-        self.ingredients=[]
+ 
         vm = IngredientListVM(ingredient: [])
         intent = IntentIngredientList()
         intent.addObserver(viewModel: vm)
@@ -25,12 +23,9 @@ struct listIngredient: View {
                 Spacer()
                 List {
                     ForEach(0..<vm.count, id: \.self) { index in
-                        Group {
-                            Button("\(self.vm[index].name)") {
-                                self.currentIngredient = self.vm[index]
-                            }
+                        NavigationLink(destination: ReadIngredient(ingredient: self.vm[index])) {
+                            Text("\(self.vm[index].name)")
                         }
-                     
                     }
                     .onDelete{indexSet in
                         let toRemove = vm.remove(atOffsets: indexSet)
@@ -45,16 +40,12 @@ struct listIngredient: View {
                         vm.move(fromOffsets: indexSet, toOffset: index)
                     }
                     
-                }.sheet(item: $currentIngredient) { ing in
-                    ReadIngredient(ingredient: ing)
                 }
-                //    EditButton()
-                
-                
+            
             }
             .navigationTitle("Liste d'ingrédients")
             .task {
-                if(self.vm.isEmpty){
+                if(self.vm.isEmpty) {
                     await self.intent.intentToLoad()
                 }
           //     self.ingredients = await IngredientService.getAllIngredient()

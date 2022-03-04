@@ -13,19 +13,22 @@ enum IntentStateIngredientCreate: CustomStringConvertible {
     case loadingAllergen
     case loadedAllergen([Allergen])
     case IngredientCreated(Ingredient)
+    case cancelIngredient
     
     
     var description: String {
         switch self {
         case .ready:
             return "state : .ready"
-
+            
         case .IngredientCreated(_) :
             return "state : .ingredientCreated(Data)"
         case .loadingAllergen:
             return "state : .loadingAllergen"
         case .loadedAllergen(_):
             return "state : .loadedAllergen(data)"
+        case .cancelIngredient:
+            return "state : .cancelIngredient"
         }
     }
 }
@@ -37,18 +40,26 @@ class IntentIngredientCreate {
         self.state.subscribe(viewModel)
     }
     
-    func intentToCreate(ingredient :Ingredient) {
+    func intentToCreate(ingredient :Ingredient) async {
         //print(state)
-        self.state.send(.IngredientCreated(ingredient))
+        
+        let ig = await IngredientService.saveIngredient(ingredient)
+        DispatchQueue.main.async {
+            if ig != nil {
+                print("Nouvelle Ingredient  : \(ig?.id)")
+            }
+            self.state.send(.IngredientCreated(ingredient))
+        }
         
         self.state.send(.ready)
     }
-    func intentToLoad() async {
+    func intentToLoad() {
         self.state.send(.loadingAllergen)
-        let data: [Allergen] = await AllergenService.getAllallergen()
-        DispatchQueue.main.async {
-            self.state.send(.loadedAllergen(data))
-        }
+        self.state.send(.loadedAllergen(GlobalInformations.allergens))
         self.state.send(.ready)
+    }
+    
+    func intentToCancel() {
+        self.state.send(.cancelIngredient)
     }
 }

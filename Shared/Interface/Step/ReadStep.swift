@@ -11,18 +11,35 @@ struct ReadStep: View {
     
     @ObservedObject var vm : StepReadVM
     private var intent: IntentStepRead
+    private var cols = [GridItem](repeating:.init(.flexible()),count:3)
+  
     init(step: Step){
         self.vm = StepReadVM(step: step)
         self.intent = IntentStepRead()
         self.intent.addObserver(viewModel: self.vm)
+
     }
     var body: some View {
         Section(header: Text(vm.step.name)){
-            Text("Taille : \(vm.step.denreeUsed.count)")
-            ReadDenree(denrees: vm.step.denreeUsed)
+            Text("Taille : \(vm.denrees.count)")
+      //      ReadDenree(denrees: $vm.denrees)/*
+            ForEach((0..<vm.denrees.count), id: \.self) { i in
+                LazyVGrid(columns : cols){
+                
+                    if let ingredient : Ingredient = vm.denrees[i].ingredient{
+                        Text("\(ingredient.name)")
+                        Text("\(ingredient.unit)")
+                        Text("\(vm.denrees[i].quantity)")
+                    }else{
+                        Text("Ingredient vide")
+                    }
+                    
+                }
+            }//*/
         }
         .task {
-           await intent.intentToLoad(denrees: vm.step.denreeUsed)
+            
+          await intent.intentToLoad(denrees: vm.step.denreeUsed)
         }
     }
 }

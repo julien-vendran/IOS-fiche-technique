@@ -8,31 +8,31 @@
 import SwiftUI
 
 struct ReadDenree: View {
-    var denrees : [Denree]
+   @Binding var denrees : [Denree]
     private var cols = [GridItem](repeating:.init(.flexible()),count:3)
-    init(denrees: [Denree]){
-        self.denrees = denrees
-      //  print("Denrées : \(denrees.count)")
+    init(denrees: Binding<[Denree]>){
+        self._denrees = denrees
+   
     }
-    var body: some View {
+        var body: some View {
         VStack{
-            List{
-                ForEach(denrees, id:\.self.id){ denree in
-                    LazyVGrid(columns : cols){
-                        if let ingredient : Ingredient = denree.ingredient{
-                            Text(" a \(ingredient.name)")
-                            Text(" b \(ingredient.unit)")
-                            Text(" c \(denree.quantity)")
-                        }
+            Text("Denrée à print : \(denrees.count)")
+            ForEach((0..<denrees.count), id: \.self) { i in
+                LazyVGrid(columns : cols){
+                
+                if let ingredient : Ingredient = denrees[i].ingredient{
+                        Text("\(ingredient.name)")
+                        Text("\(ingredient.unit)")
+                        Text("\(denrees[i].quantity)")
+                    }else{
+                        Text("Ingredient vide")
                     }
+                    
                 }
             }
+            Text("On recçoit \(denrees.count)")
         }
+        
     }
 }
 
-struct ReadDenree_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadDenree(denrees: [])
-    }
-}

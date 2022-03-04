@@ -48,12 +48,9 @@ class IntentIngredientList {
         self.state.subscribe(viewModel)
     }
     
-    func intentToLoad() async {
+    func intentToLoad() {
         self.state.send(.loading)
-        let data: [Ingredient] = await IngredientService.getAllIngredient()
-        DispatchQueue.main.async {
-            self.state.send(.loaded(data))
-        }
+        self.state.send(.loaded(GlobalInformations.ingredients))
         self.state.send(.ready)
     }
     

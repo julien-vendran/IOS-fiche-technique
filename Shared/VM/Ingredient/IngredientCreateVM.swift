@@ -18,11 +18,18 @@ class IngredientCreateVM : ObservableObject, Subscriber {
     @Published var unit: String = ""
     @Published var availableQuantity: Int = 0
     @Published var unitPrice: Double = 0
-    @Published var associatedAllergen: Set<Allergen> = Set()
+    @Published var associatedAllergen: [Allergen] = []
     @Published var listAllergen : [Allergen] = []
-    //@Published var showAllergen : Bool = false
-    
-    
+        
+    init (ingredient_to_update: Ingredient? = nil) {
+        if let ingredient: Ingredient = ingredient_to_update {
+            self.name = ingredient.name
+            self.unit = ingredient.unit
+            self.availableQuantity = ingredient.availableQuantity
+            self.unitPrice = ingredient.unitPrice
+            self.associatedAllergen = ingredient.associatedAllergen
+        }
+    }
     
     typealias Input = IntentStateIngredientCreate
     
@@ -45,10 +52,16 @@ class IngredientCreateVM : ObservableObject, Subscriber {
             break
         case .IngredientCreated(let ingredient):
             print(" ingredient creee \(ingredient)")
+            //TODO Mettre à jour la liste des ingredients dans la vue principal
         case .loadingAllergen:
             break
         case .loadedAllergen(let allergens):
             self.listAllergen = allergens
+        case .cancelIngredient:
+            self.name = ""
+            self.unit = ""
+            self.availableQuantity = 0
+            self.unitPrice = 0
         }
         
         return .none

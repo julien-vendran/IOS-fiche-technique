@@ -49,13 +49,11 @@ class IntentRecipeList {
     
     func intentToLoad() async {
         self.state.send(.loading)
-        async let r: [Recipe] =  RecipeService.getAllRecipe()
         async let s : [Step] = StepService.getAllStep()
-        let recipes  = await r
         let steps = await s
         
         DispatchQueue.main.async {
-            self.state.send(.loaded(recipes))
+            self.state.send(.loaded(GlobalInformations.recipes))
             self.state.send(.loadedStep(steps))
         }
         self.state.send(.ready)

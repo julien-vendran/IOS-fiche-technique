@@ -39,32 +39,40 @@ class IntentStepRead {
     
     func intentToLoad(denrees: [Denree]) async {
         self.state.send(.loading)
-     /*   var denree_to_load : [Denree] = await withTaskGroup(of:Denree.self) { group in
-            var d = [Denree]()
-            d.reserveCapacity(denrees.count)
-            // adding tasks to the group and fetching movies
-            for denree in denrees {
-                group.addTask{
-                   
-                        return  await DenreeService.getDenree(id: denree.id!)!
-                   
-                   
-                }
-            }
-            // grab movies as their tasks mplete, and append them to the `movies` array
-            for await denree in group {
-                d.append(denree)
+        /*
+         DispatchQueue.main.sync{
+         async let denree_to_load : [Denree] =  withTaskGroup(of:Denree.self) { group in
+         var d = [Denree]()
+         d.reserveCapacity(denrees.count)
+         // adding tasks to the group and fetching movies
+         for denree in denrees {
+         group.addTask{
+         let denree_to_load = await DenreeService.getDenree(id: denree.id!)
+         
+         return denree_to_load!
+         
+         
+         }
+         }
+         // grab movies as their tasks mplete, and append them to the `movies` array
+         for await denree in group {
+         d.append(denree)
+         }
+         
+         return d
+         }
+         self.state.send(.loaded(denree_to_load))
+         }*/
+        var denree_to_load : [Denree] = []
+        for denree in denrees {
+            let d = await DenreeService.getDenree(id: denree.id!)
+            if d != nil{
+                denree_to_load.append(d!)
             }
             
-            return d
-        }*/
-        var denree_to_load : [Denree] = []
-      /*  for denree in denrees {
-             denree_to_load.append(await DenreeService.getDenree(id: denree.id!)!)
-        }*/
-        denree_to_load.append(await DenreeService.getDenree(id: 32)!)
-        
+        }
         print(" qte \(denree_to_load.count)")
+       
         self.state.send(.loaded(denree_to_load))
         self.state.send(.ready)
     }

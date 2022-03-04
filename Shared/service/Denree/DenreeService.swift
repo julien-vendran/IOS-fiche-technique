@@ -23,10 +23,9 @@ class DenreeService {
                 
             }
         }catch let error{
-            print("ERRORRRRRRRRRRRRRRRRRRRRRRRRrrr")
             print(error)
+         
         }
-        print("yes !!!!!!!!!!! \(output)")
         return output
     }
     

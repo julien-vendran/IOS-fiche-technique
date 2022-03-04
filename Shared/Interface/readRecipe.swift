@@ -50,11 +50,7 @@ struct ReadRecipe: View {
             }
             .pickerStyle(.segmented)
         }.padding()
-            .task {
-                print("loagin)")
-            //   await self.intent.intentToLoad(idRecipe: recipe.id!)
-                print("loded")
-            }
+        
     }
 }
 
