@@ -40,7 +40,7 @@ class IntentRecipeRead {
     func intentToLoad(idRecipe: Int) async {
         self.state.send(.loading)
         
-        let steps = await RecipeService.readStepsOfRecipe(id: idRecipe)
+       // let steps = await RecipeService.readStepsOfRecipe(id: idRecipe)
         //TODO Pk on fait rien là ? et ça marhce ça ?
      //   print(steps)
         /*DispatchQueue.main.async {

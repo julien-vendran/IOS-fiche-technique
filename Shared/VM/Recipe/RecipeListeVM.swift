@@ -68,11 +68,8 @@ class RecipeListeVM: ObservableObject, Subscriber {
             }
         case .loadedStep(let data):
             self.step_list = data
-            print("Step loaded")
             if (step_list.isEmpty==false && associated_recipe_list.isEmpty==false){
-                print("les deux listes sont chargée {recettes : \(associated_recipe_list.count), steps: \(step_list.count) }")
                 buildRecipe()
-                print("builded")
                 print(associated_recipe_list[0].listOfStep)
             }
         }

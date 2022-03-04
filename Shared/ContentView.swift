@@ -34,6 +34,20 @@ struct ContentView: View {
         .task {
             GlobalInformations.recipes = await RecipeService.getAllRecipe()
         }
+        .task {
+            GlobalInformations.steps = await StepService.getAllStep()
+            for step in GlobalInformations.steps{
+                //Ajout des denrée dans les step
+                var denree_to_load : [Denree] = []
+                for denree in step.denreeUsed {
+                    let d = await DenreeService.getDenree(id: denree.id!)
+                    if d != nil{
+                        denree_to_load.append(d!)
+                    }
+                }
+                step.denreeUsed = denree_to_load
+            }
+        }
     }
 }
 
@@ -41,6 +55,7 @@ struct GlobalInformations {
     static var ingredients: [Ingredient] = []
     static var allergens: [Allergen] = []
     static var recipes: [Recipe] = []
+    static var steps : [Step] = []
 }
 
 struct ContentView_Previews: PreviewProvider {

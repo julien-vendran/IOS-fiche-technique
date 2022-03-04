@@ -60,7 +60,7 @@ class RecipeService {
         }
         return []
     }
-    
+    /*
     static func readStepsOfRecipe(id: Int) async -> [Step]{
         var output : [Step] = []
         print("------------------------------")
@@ -102,7 +102,7 @@ class RecipeService {
             print(error.localizedDescription)
         }
         return output
-    }
+    }*/
     
     static func createRecipe(recipe: Recipe) async -> Recipe? {
         print("--------------------------------------------------")

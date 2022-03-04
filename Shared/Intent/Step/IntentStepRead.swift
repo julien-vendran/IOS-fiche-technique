@@ -62,7 +62,7 @@ class IntentStepRead {
          return d
          }
          self.state.send(.loaded(denree_to_load))
-         }*/
+         }
         var denree_to_load : [Denree] = []
         for denree in denrees {
             let d = await DenreeService.getDenree(id: denree.id!)
@@ -72,8 +72,8 @@ class IntentStepRead {
             
         }
         print(" qte \(denree_to_load.count)")
-       
         self.state.send(.loaded(denree_to_load))
+         */
         self.state.send(.ready)
     }
     

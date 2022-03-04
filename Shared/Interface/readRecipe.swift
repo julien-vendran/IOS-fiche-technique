@@ -9,15 +9,18 @@ import SwiftUI
 
 enum Informations_tab: String, CustomStringConvertible, CaseIterable, Identifiable {
     case ingredient
-    case autre
+    case description
+    case cout
     var id: Self {self}
     
     var description: String {
         switch self {
         case .ingredient:
             return "Ingrédients"
-        case .autre:
-            return "Autre"
+        case .description:
+            return "Description"
+        case .cout :
+            return "Cout"
         }
     }
 }
@@ -40,7 +43,18 @@ struct ReadRecipe: View {
                 .font(.title)
             List {
                 ForEach((0..<self.vm.steps.count), id: \.self) { i in
-                    ReadStep(step: self.vm.steps[i])
+                    
+                    if case currentTab = Informations_tab.ingredient{
+                        ReadStep(step: self.vm.steps[i])
+                    }
+                      
+                    if case currentTab.id = Informations_tab.description{
+                        Section(header: Text(vm.steps[i].name)){
+                            Text("\(vm.steps[i].description)")
+                        }
+                    }
+
+                    
                 }
             }
             Picker("", selection: $currentTab) {

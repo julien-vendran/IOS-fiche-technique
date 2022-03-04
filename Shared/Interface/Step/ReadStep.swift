@@ -21,25 +21,11 @@ struct ReadStep: View {
     }
     var body: some View {
         Section(header: Text(vm.step.name)){
-            Text("Taille : \(vm.denrees.count)")
-      //      ReadDenree(denrees: $vm.denrees)/*
-            ForEach((0..<vm.denrees.count), id: \.self) { i in
-                LazyVGrid(columns : cols){
-                
-                    if let ingredient : Ingredient = vm.denrees[i].ingredient{
-                        Text("\(ingredient.name)")
-                        Text("\(ingredient.unit)")
-                        Text("\(vm.denrees[i].quantity)")
-                    }else{
-                        Text("Ingredient vide")
-                    }
-                    
-                }
-            }//*/
+            ReadDenree(denrees: vm.step.denreeUsed)
         }
         .task {
             
-          await intent.intentToLoad(denrees: vm.step.denreeUsed)
+        //  await intent.intentToLoad(denrees: vm.step.denreeUsed)
         }
     }
 }
