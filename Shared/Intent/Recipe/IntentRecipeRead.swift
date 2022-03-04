@@ -12,7 +12,7 @@ enum IntentStateRecipeRead: CustomStringConvertible {
     case ready
     case loading
     case load
-    case loaded([Step])
+    case loaded(Cost)
     
 
     var description: String {
@@ -39,13 +39,12 @@ class IntentRecipeRead {
     
     func intentToLoad(idRecipe: Int) async {
         self.state.send(.loading)
-        
-       // let steps = await RecipeService.readStepsOfRecipe(id: idRecipe)
-        //TODO Pk on fait rien là ? et ça marhce ça ?
-     //   print(steps)
-        /*DispatchQueue.main.async {
-            self.state.send(.loaded(steps))
-        }*/
+        if let cout = await RecipeService.getCostOfRecipe(IdRecipe: idRecipe){
+            DispatchQueue.main.async {
+                self.state.send(.loaded(cout))
+            }
+        }
+
         self.state.send(.ready)
     }
     

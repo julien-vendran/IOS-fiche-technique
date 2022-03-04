@@ -56,53 +56,25 @@ class RecipeService {
             return list_recipe
             
         } catch let error {
-                print(error)
+            print(error)
         }
         return []
     }
-    /*
-    static func readStepsOfRecipe(id: Int) async -> [Step]{
-        var output : [Step] = []
-        print("------------------------------")
+    
+    static func getCostOfRecipe(IdRecipe: Int) async -> Cost? {
+        var output : Cost? = nil
         do{
-            if let url = URL(string:url_back+"\(id)"){
-                let decoded : READRecipeOrStepDTO = try await URLSession.shared.getJSON(from: url)
-                //Pour chaque element dto on converti, compactMap =map mais plus simple
-                if(decoded.isRecipe){
-                    print("recipe : \(decoded.id!)")
-                    if let recip = await readRecipe(id: decoded.id!){
-                        for step in recip.listOfSteps{
-                          await  output+=readStepsOfRecipe(id: step.id!)
-                        }
-                    }
-                        
-                }else{
-                    print("step :  \(decoded.id!)")
-                    if let step = await StepService.getStep(id:decoded.id!){
-                        output.append(step)
-                    }
-                }
-                
-                
+            if let url = URL(string: url_back+"cost/\(IdRecipe)"){
+                let decoded : CostDTO = try await URLSession.shared.getJSON(from: url)
+                output = decoded.cout
             }
         }catch let error{
             print(error)
         }
-        print("readStepsOfRecipe \(output)")
         return output
+        
     }
     
-    private static func readRecipe(id: Int) async -> READRecipeDTO?{
-        var output : READRecipeDTO? = nil
-        do{
-            if let url = URL(string:url_back+"\(id)"){
-                output = try await URLSession.shared.getJSON(from: url)
-            }
-        }catch let error{
-            print(error.localizedDescription)
-        }
-        return output
-    }*/
     
     static func createRecipe(recipe: Recipe) async -> Recipe? {
         print("--------------------------------------------------")
@@ -127,7 +99,7 @@ class RecipeService {
                 } else {
                     return nil
                 }
-
+                
             } catch let error {
                 print(error)
             }

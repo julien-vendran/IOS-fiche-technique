@@ -12,6 +12,7 @@ class RecipeReadVM : ObservableObject, Subscriber {
     
     
     @Published var steps : [Step]
+    @Published var cout : Cost?
 
     init(step: [Step]){
         self.steps = step
@@ -41,7 +42,7 @@ class RecipeReadVM : ObservableObject, Subscriber {
         case .loading: //On ne le met que si on veut que notre view se mette en "attente d'une réponse"
             break
         case .loaded(let data): //On vient de recevoir nos nouvelles données
-            break
+            cout = data
         }
         return .none
     }

@@ -10,10 +10,16 @@ class Cost {
 
     var coutDesMatiere: Double
     var coutAssaisonnement: Double
-    var coutDesCharges: Double
+   
     var coutDesFluides: Double
     var coutDePersonnel: Double
-    var coutDeProduction: Double
+    var coutDeProduction: Double {
+        return self.coutDesMatiere+(self.coutDesCharges+self.coutAssaisonnement)
+    }
+    
+    var coutDesCharges: Double{
+        return self.coutDePersonnel + self.coutDesFluides
+    }
     var prixDeVente: Double {
         return self.coutDeProduction * 2.0
     }
@@ -32,7 +38,6 @@ class Cost {
         self.coutAssaisonnement = (coutAssaisonnement != nil) ? coutAssaisonnement! : Double(coutDesMatiere) * 0.05
         self.coutDesFluides = coutDesFluides
         self.coutDePersonnel = coutDePersonnel
-        self.coutDesCharges = coutDesFluides + coutDePersonnel
-        self.coutDeProduction = coutDesMatiere+(self.coutDesCharges+self.coutAssaisonnement)
+
     }
 }

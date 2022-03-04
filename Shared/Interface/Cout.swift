@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct Cout: View {
+    
+    @State var cout : Cost?
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            if let cost = cout{
+                Text("Cout des charges : \(cost.coutDesCharges)€")
+                Text("Cout des matières : \(cost.coutDesMatiere)€")
+                Text("Cout de production : \(cost.coutDeProduction)€")
+            }
+        }
     }
 }
 

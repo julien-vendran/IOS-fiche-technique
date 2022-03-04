@@ -41,29 +41,42 @@ struct ReadRecipe: View {
         VStack() {
             Text("\(recipe.name)")
                 .font(.title)
-            List {
-                ForEach((0..<self.vm.steps.count), id: \.self) { i in
-                    
-                    if case currentTab = Informations_tab.ingredient{
-                        ReadStep(step: self.vm.steps[i])
-                    }
-                      
-                    if case currentTab.id = Informations_tab.description{
-                        Section(header: Text(vm.steps[i].name)){
-                            Text("\(vm.steps[i].description)")
+            if case currentTab = Informations_tab.cout{
+                Cout(cout: vm.cout)
+            }else{
+                List {
+                    ForEach((0..<self.vm.steps.count), id: \.self) { i in
+                        
+                        if case currentTab = Informations_tab.ingredient{
+                            ReadStep(step: self.vm.steps[i])
                         }
+                        
+                        if case currentTab.id = Informations_tab.description{
+                            Section(header: Text(vm.steps[i].name)){
+                                Text("\(vm.steps[i].description)")
+                            }
+                        }
+                        
                     }
-
-                    
                 }
             }
+            HStack{
+             
             Picker("", selection: $currentTab) {
                 ForEach(Informations_tab.allCases) { info in
                     Text(info.rawValue)
                 }
             }
             .pickerStyle(.segmented)
-        }.padding()
+                
+            }
+            .frame(height: 40)
+            
+        
+        }.task {
+           await intent.intentToLoad(idRecipe: recipe.id!)
+        }
+        .padding()
         
     }
 }
