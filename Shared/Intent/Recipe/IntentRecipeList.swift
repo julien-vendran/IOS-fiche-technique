@@ -20,6 +20,9 @@ enum IntentStateRecipeList: CustomStringConvertible {
     case adding
     case added(Recipe?)
     
+    case deleting
+    case deleted(Recipe)
+    
     var description: String {
         switch self {
         case .ready:
@@ -36,6 +39,10 @@ enum IntentStateRecipeList: CustomStringConvertible {
             return "state : .added"
         case .loadedStep(_):
             return "state : .loaddedStep(data)"
+        case .deleting:
+            return "state : .deleting"
+        case .deleted(_):
+            return "state : .deleted(data)"
         }
     }
 }
@@ -66,5 +73,9 @@ class IntentRecipeList {
         let result: Recipe? = await RecipeService.createRecipe(recipe: recipe)
         
         self.state.send(.added(result))	
+    }
+    
+    func intentToDelete(recipe: Recipe) async {
+        await RecipeService.deletRecipet(id: recipe.id!)
     }
 }

@@ -106,4 +106,18 @@ class RecipeService {
         }
         return nil
     }
+    
+    public static func deletRecipet(id: Int) async {
+        if let url = URL(string: url_back+"\(id)"){
+            var request = URLRequest(url: url)
+            request.httpMethod="DELETE"
+            do{
+                let _ = try await URLSession.shared.data(for: request)
+           
+            }catch let error{
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
 }

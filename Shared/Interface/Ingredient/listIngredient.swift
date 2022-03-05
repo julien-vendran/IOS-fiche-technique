@@ -46,7 +46,7 @@ struct listIngredient: View {
             .navigationTitle("Liste d'ingrédients")
             .task {
                 if(self.vm.isEmpty) {
-                    await self.intent.intentToLoad()
+                    self.intent.intentToLoad()
                 }
           //     self.ingredients = await IngredientService.getAllIngredient()
                     

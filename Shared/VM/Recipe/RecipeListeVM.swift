@@ -24,6 +24,19 @@ class RecipeListeVM: ObservableObject, Subscriber {
         self.step_list = []
     }
     
+    func removeRecipes(atOffsets: IndexSet) -> [Recipe]{
+        var output : [Recipe] = []
+        for i in atOffsets.makeIterator() {
+            output.append(associated_recipe_list[i])
+           }
+        self.associated_recipe_list.remove(atOffsets: atOffsets)
+        return output
+    }
+    
+    func moveRecipes(fromOffsets: IndexSet, toOffset: Int){
+        self.associated_recipe_list.move(fromOffsets: fromOffsets, toOffset: toOffset)
+    }
+    
     //Fonction utiles
     subscript(index: Int) -> Recipe { //Redéfinir []
         return self.associated_recipe_list[index]
@@ -72,6 +85,10 @@ class RecipeListeVM: ObservableObject, Subscriber {
                 buildRecipe()
                 print(associated_recipe_list[0].listOfStep)
             }
+        case .deleting:
+            break
+        case .deleted(let recipe):
+            print("Suppression de  la recette \(recipe.name)")
         }
         return .none
     }

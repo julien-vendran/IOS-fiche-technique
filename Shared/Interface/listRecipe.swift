@@ -35,7 +35,12 @@ struct ListRecipe: View {
                         }
                     }
                     .onDelete() { indexSet in
-                        self.recipeListVM.associated_recipe_list.remove(atOffsets: indexSet)
+                        let recipes_to_del = self.recipeListVM.removeRecipes(atOffsets: indexSet)
+                        Task{
+                            for recipe in recipes_to_del {
+                                await self.recipeIntent.intentToDelete(recipe: recipe)
+                            }
+                        }
                     }
                 }
             }

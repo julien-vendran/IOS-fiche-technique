@@ -8,31 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var ingredient: Bool = false
+    @State var allergen: Bool = false
+    @State var recipe: Bool = false
+    @State var step: Bool = false
+
     var body: some View {
         Group {
-            TabView {
-                listIngredient()
-                    .tabItem {
-                        Label(" 🥕 Ingrédients", systemImage: "list.dash")
-                    }
-                listAllergen()
-                    .tabItem {
-                        Label("Allergènes", systemImage: "square.and.pencil")
-                    }
-                ListRecipe()
-                    .tabItem {
-                        Label("Recettes", systemImage: "pencil.slash")
-                    }
+            if (ingredient && allergen && recipe && step) {
+                TabView {
+                    listIngredient()
+                        .tabItem {
+                            Label("Ingrédients", systemImage: "list.dash")
+                        }
+                    listAllergen()
+                        .tabItem {
+                            Label("Allergènes", systemImage: "square.and.pencil")
+                        }
+                    ListRecipe()
+                        .tabItem {
+                            Label("Recettes", systemImage: "pencil.slash")
+                        }
+                }
+            } else {
+                Text("Chargement de l'application ...")
+                    .font(.title)
+                ProgressView()
             }
         }
         .task {
             GlobalInformations.ingredients = await IngredientService.getAllIngredient()
+            print("------------------------------")
+            print(GlobalInformations.ingredients[0].id)
+            self.ingredient = true
         }
         .task {
             GlobalInformations.allergens = await AllergenService.getAllallergen()
+            self.allergen = true
         }
         .task {
             GlobalInformations.recipes = await RecipeService.getAllRecipe()
+            self.recipe = true
         }
         .task {
             GlobalInformations.steps = await StepService.getAllStep()
@@ -47,6 +63,7 @@ struct ContentView: View {
                 }
                 step.denreeUsed = denree_to_load
             }
+            self.step = true
         }
     }
 }

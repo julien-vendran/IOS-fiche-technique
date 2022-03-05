@@ -83,4 +83,27 @@ class IngredientService {
             }
         }
     }
+    
+    public static func updateIngredient(_ ingr: Ingredient) async {
+        if let url = URL(string: "\(url_back)\(ingr.id!)") {
+            var request = URLRequest(url: url)
+            request.addValue("application/json", forHTTPHeaderField:"Content-Type")
+            request.httpMethod = "PATCH"
+            
+            let associatedAllergenDTO = ingr.associatedAllergen.compactMap{ (al : Allergen) -> AllergenDTO in
+                return AllergenDTO(id_Allergen: al.id, allergen_name: al.name)
+            }
+            let dto = IngredientDTO(id: ingr.id, name: ingr.name, unit: ingr.unit, availableQuantity: ingr.availableQuantity, unitPrice: ingr.unitPrice, associatedAllergen: associatedAllergenDTO)
+            
+            do{
+                
+                let encoded = try JSONEncoder().encode(dto)
+                let _ = try await URLSession.shared.upload(for: request, from: encoded)
+                
+            }catch  let error {
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
 }

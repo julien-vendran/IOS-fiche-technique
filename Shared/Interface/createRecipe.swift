@@ -107,7 +107,9 @@ struct createRecipe: View {
                         if (self.listOfSteps[idSOR] is Step) {
                             NavigationLink(destination: CreateStep(stepIntent: self.stepIntent, step: self.listOfSteps[idSOR] as! Step)) {
                                 let s: Step = self.listOfSteps[idSOR] as! Step
-                                Text("\(s.name): \(s.duration) minutes")
+                                
+                                let formatted = String(format: "%.2f",s.duration)
+                                Text("\(s.name): \(formatted) minutes")
                             }
                         }
                         else {

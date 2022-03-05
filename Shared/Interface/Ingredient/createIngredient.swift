@@ -13,6 +13,8 @@ struct CreateIngredient: View {
     @State var allergen : Allergen? = nil
     @State private var selectedAllergen: Int = -1
     var updateMode: Bool
+    var ingredient_update: Ingredient?
+    let list_Allergen: [Allergen] = GlobalInformations.allergens
     
     var cols = [
         GridItem(.flexible()),
@@ -23,24 +25,11 @@ struct CreateIngredient: View {
     @Environment(\.presentationMode) var presentationMode
     
     init(ingredient_to_update: Ingredient? = nil) {
+        self.ingredient_update = ingredient_to_update
         self.updateMode = ingredient_to_update != nil //Si c'est différent de nul alors on veut mettre à jour l'existant
         self.vm = IngredientCreateVM(ingredient_to_update: ingredient_to_update)
         self.intent = IntentIngredientCreate()
         self.intent.addObserver(viewModel: self.vm)
-        
-        if let ingredient: Ingredient = ingredient_to_update {
-            print("Mise à jour")
-            if (ingredient.associatedAllergen.count > 0) {
-                print("TIENS TIENS TIENS")
-                for i in 0..<self.vm.listAllergen.count {
-                    if (ingredient.associatedAllergen[0].name == self.vm.listAllergen[i].name) {
-                        print("Hoplé \(i)")
-                        self.selectedAllergen = i
-                    }
-                }
-                
-            }
-        }
     }
     
     
@@ -71,29 +60,38 @@ struct CreateIngredient: View {
             Section (header: Text("Allergènes")) {
                 Picker(selection: $selectedAllergen, label: Text("Allergen")) {
                     Text("Aucun allergène").tag(-1)
-                    ForEach(0..<self.vm.listAllergen.count, id:\.self) { id in
-                        Text("\(self.vm.listAllergen[id].name)").tag(id)
+                    ForEach(0..<self.list_Allergen.count, id:\.self) { id in
+                        Text("\(self.list_Allergen[id].name)").tag(id)
                     }
                     .navigationBarTitle("Choix allergènes")
+                }.onAppear {
+                    if let ingredient: Ingredient = self.ingredient_update {
+                        if (ingredient.associatedAllergen.count > 0) {
+                            for i in 0..<self.list_Allergen.count {
+                                if (ingredient.associatedAllergen[0].name == self.list_Allergen[i].name) {
+                                    self.selectedAllergen = i
+                                }
+                            }
+                        }
+                    }
                 }
             }
             Section(header: Text("Boutons")) {
                 Button(action: validate) {
-                    Text("Créer ingrédient")
+                    if (self.updateMode) {
+                        Text("Mettre à jour ingrédient")
+                    } else {
+                        Text("Créer ingrédient")
+                    }
                 }
                 Button(action: {
                     self.intent.intentToCancel()
                     presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Annuler la création")
+                    Text((self.updateMode) ? "Annuler la mise a jour" : "Annuler la création")
                 }
                 .foregroundColor(.red)
             }
-        }
-        .task {
-            // self.listAllergen = await AllergenService.getAllallergen()
-            await self.intent.intentToLoad()
-            
         }
         .navigationTitle("Ajouter ingrédient")
     }
@@ -103,15 +101,21 @@ struct CreateIngredient: View {
         if (selectedAllergen == -1) {
             allergen = []
         } else {
-            allergen = [self.vm.listAllergen[selectedAllergen]]
+            allergen = [self.list_Allergen[selectedAllergen]]
         }
-        let ig = Ingredient(name: self.vm.name, unit: self.vm.unit, availableQuantity:self.vm.availableQuantity, unitPrice: self.vm.unitPrice, associatedAllergen: allergen, denreeUsed: [], id: nil)
-        
-        self.intent.intentToCancel()
+        let ig: Ingredient = self.vm.getStateIngredient(list_allergen: allergen)
+        if (self.updateMode) {
+            Task {
+                await intent.intentToUpdate(ig)
+                self.intent.intentToCancel()
+            }
+        } else {
+            Task{
+                await intent.intentToCreate(ingredient: ig)
+                self.intent.intentToCancel()
+            }
+        }
         presentationMode.wrappedValue.dismiss()
-        Task{
-            await intent.intentToCreate(ingredient: ig)
-        }
         
     }
 }
