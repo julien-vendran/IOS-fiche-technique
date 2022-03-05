@@ -66,6 +66,7 @@ class StepService {
             let denree_tmp: Denree? = await DenreeService.createDenree(step.denreeUsed[i])
 
             if (denree_tmp != nil) { //Si l'enregistrement s'est bien passé
+                s.denreeUsed[i] = denree_tmp!
                 s.denreeUsed[i].id = denree_tmp!.id //On met à jour l'id de notre denrée pour notre step
             } else {
                 //Gérer l'erreur d'ajout d'une denrée
@@ -83,7 +84,9 @@ class StepService {
             
             //D'abord, on enregistre nos denrées en BD
             let new_Step: Step = await StepService.saveDenreeFromStep(step)
-            
+            if new_Step.denreeUsed.count>0{
+                print("New denree : \(new_Step.denreeUsed[0].ingredient)")
+            }
             let step_dto: StepDTO = StepService.createStepDTO(new_Step)
             
             do {
@@ -92,7 +95,10 @@ class StepService {
                 let addedStep: StepDTO? = JSONHelpler.decode(data: addedValue.0)
                 if (addedStep != nil) {
                     print("On retourne notre étape sans erreur")
-                    return addedStep!.step
+                    let step_created = addedStep!.step
+                    step_created.denreeUsed = new_Step.denreeUsed
+                    //return addedStep!.step
+                    return step_created
                 } else {
                     return nil
                 }

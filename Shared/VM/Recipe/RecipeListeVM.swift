@@ -76,6 +76,7 @@ class RecipeListeVM: ObservableObject, Subscriber {
             if (recipe != nil) {
                 print(recipe!)
                 self.associated_recipe_list.append(recipe!)
+                GlobalInformations.recipes.append(recipe!)
             } else { //Erreur dans l'ajout de notre recette
                 print("Erreur dans la création de la recette")
             }

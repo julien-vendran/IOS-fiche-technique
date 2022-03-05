@@ -25,6 +25,8 @@
 		6F5ABC0127C9165B00B03138 /* IntentRecipeCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */; };
 		6F5ABC0327C92BC900B03138 /* RecipeCreateStepListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0227C92BC900B03138 /* RecipeCreateStepListVM.swift */; };
 		6F5ABC0827CA667D00B03138 /* IngredientListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0727CA667D00B03138 /* IngredientListVM.swift */; };
+		6F686C3F27D2566800CCF864 /* Cout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F686C3E27D2566800CCF864 /* Cout.swift */; };
+		6F686C4327D259DB00CCF864 /* CostDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F686C4227D259DB00CCF864 /* CostDTO.swift */; };
 		6F8E0E9327CD1F7100994BFD /* createDenree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9227CD1F7100994BFD /* createDenree.swift */; };
 		6F8E0E9527CD1FA600994BFD /* RecipeDenreeCreateVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */; };
 		6F8E0E9727CE44B200994BFD /* IntentRecipeRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9627CE44B200994BFD /* IntentRecipeRead.swift */; };
@@ -102,6 +104,8 @@
 		6F5ABC0027C9165B00B03138 /* IntentRecipeCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentRecipeCreate.swift; sourceTree = "<group>"; };
 		6F5ABC0227C92BC900B03138 /* RecipeCreateStepListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreateStepListVM.swift; sourceTree = "<group>"; };
 		6F5ABC0727CA667D00B03138 /* IngredientListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListVM.swift; sourceTree = "<group>"; };
+		6F686C3E27D2566800CCF864 /* Cout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cout.swift; sourceTree = "<group>"; };
+		6F686C4227D259DB00CCF864 /* CostDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostDTO.swift; sourceTree = "<group>"; };
 		6F8E0E9227CD1F7100994BFD /* createDenree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createDenree.swift; sourceTree = "<group>"; };
 		6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDenreeCreateVM.swift; sourceTree = "<group>"; };
 		6F8E0E9627CE44B200994BFD /* IntentRecipeRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentRecipeRead.swift; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 				6F3D385127C12E59008C36CD /* imgDTO.swift */,
 				B7DEF6E127C518F6003A53BC /* RecipeOrStepDTO.swift */,
 				6FFC432327CAACFE00915E90 /* StepDTO.swift */,
+				6F686C4227D259DB00CCF864 /* CostDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 				6F3D385327C402F0008C36CD /* Allergen */,
 				6F3D383627BD5DC5008C36CD /* Ingredient */,
 				6FC966E927BC132C006C33B4 /* Recipe */,
+				6F686C3E27D2566800CCF864 /* Cout.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -631,6 +637,7 @@
 				B7DEF6DE27C514E4003A53BC /* RecipeService.swift in Sources */,
 				6FC966ED27BC152F006C33B4 /* listRecipe.swift in Sources */,
 				6F8E0EA827CFC84A00994BFD /* IntentStepRead.swift in Sources */,
+				6F686C4327D259DB00CCF864 /* CostDTO.swift in Sources */,
 				B7DEF6E227C518F6003A53BC /* RecipeOrStepDTO.swift in Sources */,
 				6F2B958927C4C6290091F706 /* createIngredient.swift in Sources */,
 				6F2B958C27C4E3790091F706 /* ingredientService.swift in Sources */,
@@ -638,6 +645,7 @@
 				6F5ABBFF27C90FD100B03138 /* createStep.swift in Sources */,
 				B70F364D27C616E500068F4B /* readRecipe.swift in Sources */,
 				6F3D385227C12E59008C36CD /* imgDTO.swift in Sources */,
+				6F686C3F27D2566800CCF864 /* Cout.swift in Sources */,
 				6FC966E627BBF819006C33B4 /* ingredient.swift in Sources */,
 				6FC966E427BBF6A2006C33B4 /* cost.swift in Sources */,
 				6F5ABC0127C9165B00B03138 /* IntentRecipeCreate.swift in Sources */,

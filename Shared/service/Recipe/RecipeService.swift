@@ -32,6 +32,7 @@ class RecipeService {
                 print("On vient de trouver que notre truc est bien une étape")
                 let step_tmp: Step? = await StepService.createStep(step: recipe.listOfStep[i] as! Step)
                 if (step_tmp != nil) {
+                    r.listOfStep[i] = step_tmp!
                     r.listOfStep[i].id = step_tmp!.id
                     let tmp: Int = r.listOfStep[i].id!
                     print("Mise à jour de recipe.id (\(tmp)")
@@ -95,7 +96,10 @@ class RecipeService {
                 let addedRecipe: RecipeDTO? = JSONHelpler.decode(data: addedValue.0)
                 print("--------------------------------------------------")
                 if (addedRecipe != nil) {
-                    return addedRecipe!.recipe
+                    let recipe_created = addedRecipe!.recipe
+                    recipe_created.listOfStep = new_recipe.listOfStep
+                   // return addedRecipe!.recipe
+                    return recipe_created
                 } else {
                     return nil
                 }
