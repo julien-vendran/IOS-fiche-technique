@@ -15,7 +15,7 @@ struct CreateIngredient: View {
     var updateMode: Bool
     var ingredient_update: Ingredient?
     let list_Allergen: [Allergen] = GlobalInformations.allergens
-    
+    var parent_intent : IntentIngredientList
     var cols = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -24,12 +24,14 @@ struct CreateIngredient: View {
     // @Binding var showingSheet : Bool
     @Environment(\.presentationMode) var presentationMode
     
-    init(ingredient_to_update: Ingredient? = nil) {
+    init(ingredient_to_update: Ingredient? = nil, parent_intent : IntentIngredientList) {
+        self.parent_intent = parent_intent
         self.ingredient_update = ingredient_to_update
         self.updateMode = ingredient_to_update != nil //Si c'est différent de nul alors on veut mettre à jour l'existant
         self.vm = IngredientCreateVM(ingredient_to_update: ingredient_to_update)
         self.intent = IntentIngredientCreate()
         self.intent.addObserver(viewModel: self.vm)
+       
     }
     
     
@@ -111,10 +113,12 @@ struct CreateIngredient: View {
             }
         } else {
             Task{
-                await intent.intentToCreate(ingredient: ig)
+             //   await intent.intentToCreate(ingredient: ig)
+                await parent_intent.intentToCreate(ingredient: ig)
                 self.intent.intentToCancel()
             }
         }
+      //  self.parent_intent.intentToLoad()
         presentationMode.wrappedValue.dismiss()
         
     }

@@ -37,6 +37,7 @@ class IntentIngredientCreate {
         self.state.subscribe(viewModel)
     }
     
+    //Jamais appele car utilisé dans IntetentIngList pour cree
     func intentToCreate(ingredient: Ingredient) async {
         //print(state)
         

@@ -71,8 +71,10 @@ class IntentRecipeList {
         self.state.send(.adding) //On passe en mode ajout d'une recette
         
         let result: Recipe? = await RecipeService.createRecipe(recipe: recipe)
-        
-        self.state.send(.added(result))	
+        DispatchQueue.main.async {
+            self.state.send(.added(result))
+        }
+
     }
     
     func intentToDelete(recipe: Recipe) async {

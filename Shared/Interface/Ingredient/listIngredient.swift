@@ -23,7 +23,7 @@ struct listIngredient: View {
                 Spacer()
                 List {
                     ForEach(0..<vm.count, id: \.self) { index in
-                        NavigationLink(destination: ReadIngredient(ingredient: self.vm[index])) {
+                        NavigationLink(destination: ReadIngredient(ingredient: self.vm[index] , parent_intent: self.intent)) {
                             Text("\(self.vm[index].name)")
                         }
                     }
@@ -56,7 +56,7 @@ struct listIngredient: View {
                     EditButton()
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    NavigationLink(destination: CreateIngredient()) {
+                    NavigationLink(destination: CreateIngredient(parent_intent: self.intent)) {
                         Image(systemName: "plus")
                     }
                     
