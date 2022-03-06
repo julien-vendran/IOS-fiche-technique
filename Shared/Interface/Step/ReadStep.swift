@@ -25,9 +25,3 @@ struct ReadStep: View {
         }
     }
 }
-
-/*struct ReadStep_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadStep(step: Step(name: "", description: "", duration: 0, denreeUsed: [], id: 1))
-    }
-}*/

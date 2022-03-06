@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct CreateDenree: View {
+    
     var intentDenree: IntentRecipeCreate
+    
     var denreeToUpdate: Denree?
     var updateMode: Bool = false
+
     @State var quantity: Double = 0.0
     @State private var ingredient_id: Int = 0
     @State var ingredients: [Ingredient] = []
     
     @Environment(\.presentationMode) var presentationMode
-    
-    var list_ingredients_id: [Int] {
-        return [1, 2, 3]
-    }
     
     let col = [
         GridItem(.flexible()),
@@ -29,10 +28,9 @@ struct CreateDenree: View {
     init(intent: IntentRecipeCreate, denreeToUpdate: Denree? = nil) {
         self.intentDenree = intent
         self.denreeToUpdate = denreeToUpdate
-        if (self.denreeToUpdate != nil) {
-            self.updateMode = true //On va utiliser cette variable pour savoir qu'on veut modifier et par créer
-        }
+        self.updateMode = self.denreeToUpdate != nil //On va utiliser cette variable pour savoir qu'on veut modifier et par créer
     }
+    
     var body: some View {
         Form {
             Section(header: Text("Informations")) {
@@ -57,7 +55,6 @@ struct CreateDenree: View {
             Section(header: Text("Boutons")) {
                 if (!self.updateMode) { //on veut ajouter
                     Button("Ajouter l'ingrédient") {
-                        print("id : \(self.ingredient_id)")
                         self.intentDenree.intentToCreate(denree: Denree(quantity: self.quantity, ingredient: self.ingredients[self.ingredient_id], step: nil, id: nil))
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -75,8 +72,7 @@ struct CreateDenree: View {
             }
         }
         .task {
-            //TODO: Le passer en paramètre ce sera mieux
-            self.ingredients = await IngredientService.getAllIngredient()
+            self.ingredients = GlobalInformations.ingredients
             self.ingredients = self.ingredients.sorted(by: {$0.name < $1.name})
             
             if (self.updateMode) { //Si on met à jour un ingrédient, on veut lui pré-remplir les champs

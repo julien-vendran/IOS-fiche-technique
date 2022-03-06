@@ -12,7 +12,6 @@ struct listIngredient: View {
     var intent: IntentIngredientList
     
     init() {
- 
         vm = IngredientListVM(ingredient: [])
         intent = IntentIngredientList()
         intent.addObserver(viewModel: vm)
@@ -48,10 +47,8 @@ struct listIngredient: View {
                 if(self.vm.isEmpty) {
                     self.intent.intentToLoad()
                 }
-          //     self.ingredients = await IngredientService.getAllIngredient()
-                    
-               
-            } .toolbar {
+            }
+            .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     EditButton()
                 }

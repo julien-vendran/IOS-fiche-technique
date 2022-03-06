@@ -44,7 +44,6 @@ struct CreateStep: View {
         if (self.stepToUpdate != nil) {
             self.updateMode = true
             denreeUsed.setUp(denrees: self.stepToUpdate!.denreeUsed)
-            print("Etat liste : \(self.denreeUsed.denree_list)")
         }
     }
     
@@ -82,7 +81,7 @@ struct CreateStep: View {
                             }
                         }
                     }
-                    .onDelete() { indexSet in //TODO : Est ce qu'on fait une fonction dans la VM pour éviter d'aller chercher ses attributs ?
+                    .onDelete() { indexSet in
                         self.denreeUsed.denree_list.remove(atOffsets: indexSet)
                     }
                     .onMove{ indexSet, index in
@@ -135,9 +134,3 @@ struct CreateStep: View {
         }
     }
 }
-
-/*struct createStep_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateStep()
-    }
-}*/

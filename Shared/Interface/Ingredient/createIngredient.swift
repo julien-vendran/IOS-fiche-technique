@@ -10,18 +10,20 @@ import SwiftUI
 struct CreateIngredient: View {
     @ObservedObject var vm : IngredientCreateVM
     var intent : IntentIngredientCreate
+    
     @State var allergen : Allergen? = nil
     @State private var selectedAllergen: Int = -1
     var updateMode: Bool
     var ingredient_update: Ingredient?
+
     let list_Allergen: [Allergen] = GlobalInformations.allergens
     var parent_intent : IntentIngredientList
+
     var cols = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     
-    // @Binding var showingSheet : Bool
     @Environment(\.presentationMode) var presentationMode
     
     init(ingredient_to_update: Ingredient? = nil, parent_intent : IntentIngredientList) {
@@ -33,7 +35,6 @@ struct CreateIngredient: View {
         self.intent.addObserver(viewModel: self.vm)
        
     }
-    
     
     var body: some View {
         Form {
@@ -114,19 +115,11 @@ struct CreateIngredient: View {
             }
         } else {
             Task{
-             //   await intent.intentToCreate(ingredient: ig)
                 await parent_intent.intentToCreate(ingredient: ig)
                 self.intent.intentToCancel()
             }
         }
-      //  self.parent_intent.intentToLoad()
         presentationMode.wrappedValue.dismiss()
         
     }
 }
-/*
- struct createIngredient_Previews: PreviewProvider {
- static var previews: some View {
- createIngredient()
- }
- }*/

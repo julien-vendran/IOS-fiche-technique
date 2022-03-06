@@ -44,6 +44,7 @@ struct createRecipe: View {
     
     init (recipeIntent: IntentRecipeList, recipeInStock: [Recipe]) {
         self.recipeIntent = recipeIntent
+        
         //On va se servir de ça pour avoir le retour sur les données des étapes ajoutées
         self.stepIntent = IntentRecipeCreate()
         self.recipeInStock = recipeInStock
@@ -52,7 +53,6 @@ struct createRecipe: View {
         if (recipeInStock.count > 0) {
             self.recipeChoosed = recipeInStock[0]
         }
-        print("On passe par le init")
         self.listOfSteps.recipeOrStep_list = []
     }
     
@@ -90,11 +90,6 @@ struct createRecipe: View {
                         Text("Ajouter une étape")
                     }
                 }
-                /*Picker("", selection: $recipeChoosed) {
-                    ForEach(0..<self.recipeInStock.count) { id in
-                        Text(self.recipeInStock[id])
-                    }
-                }*/
                 Picker(selection: $recipeToAdd, label: Text("Recette")) {
                     ForEach(0..<self.recipeInStock.count) { idRecipe in
                         Text("\(self.recipeInStock[idRecipe].name)").tag(idRecipe)
@@ -104,19 +99,17 @@ struct createRecipe: View {
                 }
                 List {
                     ForEach(0..<self.listOfSteps.count, id: \.self) { idSOR in
-                        if (self.listOfSteps[idSOR] is Step) {
-                            NavigationLink(destination: CreateStep(stepIntent: self.stepIntent, step: self.listOfSteps[idSOR] as! Step)) {
+                        if let step: Step = self.listOfSteps[idSOR] as? Step {
+                            NavigationLink(destination: CreateStep(stepIntent: self.stepIntent, step: step)) {
                                 let s: Step = self.listOfSteps[idSOR] as! Step
                                 
                                 let formatted = String(format: "%.2f",s.duration)
                                 Text("\(s.name): \(formatted) minutes")
                             }
-                        }
-                        else {
+                        } else {
                             Text("[Recette] \(self.listOfSteps[idSOR].name)")
-                                .foregroundColor(.gray)
+                                .foregroundColor(.secondary)
                         }
-                        //Text("Recette : \(idSOR)")
                     }
                     .onDelete() { indexSet in
                         self.listOfSteps.recipeOrStep_list.remove(atOffsets: indexSet)
@@ -145,9 +138,3 @@ struct createRecipe: View {
         .navigationBarBackButtonHidden(true)
     }
 }
-
-/*struct createRecipe_Previews: PreviewProvider {
-    static var previews: some View {
-        createRecipe()
-    }
-}*/

@@ -26,16 +26,18 @@ enum Informations_tab: String, CustomStringConvertible, CaseIterable, Identifiab
 }
 
 struct ReadRecipe: View {
+
     var recipe: Recipe
     @State var currentTab: Informations_tab = .ingredient
     @ObservedObject var vm : RecipeReadVM
+    
     var intent : IntentRecipeRead
+
     init(recipe: Recipe){
         self.recipe = recipe
         self.vm = RecipeReadVM(step: recipe.getSteps())
         self.intent = IntentRecipeRead()
         self.intent.addObserver(viewModel: self.vm)
-        
     }
     var body: some View {
         VStack() {
@@ -59,7 +61,7 @@ struct ReadRecipe: View {
                 }
             }
         }.task {
-            await intent.intentToLoad(idRecipe: recipe.id!) //TODO: On en a encore besoin ?
+            await intent.intentToLoad(idRecipe: recipe.id!)
         }
         .padding()
         .navigationTitle("\(recipe.name)")

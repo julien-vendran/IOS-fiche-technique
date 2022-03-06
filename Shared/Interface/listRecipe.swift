@@ -11,13 +11,9 @@ struct ListRecipe: View {
     @ObservedObject var recipeListVM: RecipeListeVM
     var recipeIntent: IntentRecipeList
     
-    //@State var showCreationSheet: Bool = false
-    @ObservedObject var recipe_creation: Recipe
-    
     init () {
         self.recipeIntent = IntentRecipeList()
         self.recipeListVM = RecipeListeVM(recipe: [])
-        self.recipe_creation = Recipe(name: "", responsable: "", nbOfCover: 0, category: "", listOfStep: [], id: nil)
         self.recipeIntent.addObserver(viewModel: self.recipeListVM)
     }
     
