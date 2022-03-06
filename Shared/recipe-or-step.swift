@@ -16,7 +16,7 @@ class RecipeOrStep {
         self.name = name
     }
     
-    func getSteps() -> [Step]{
+    func getSteps() -> [Step] {
         return []
     }
 }

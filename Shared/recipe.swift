@@ -6,9 +6,6 @@
 //
 
 import Foundation
-/*
- {"parents":{"parents":null,"id":11,"name":"Purée steack","responsable":"Cuisinier ","nbOfCover":4,"category":"Plat pour enfant"},"id":9,"name":"Purée de pomme de terre","responsable":"Cuisinier","nbOfCover":4,"category":"Plat","listOfSteps":
- */
 
 class Recipe: RecipeOrStep, ObservableObject {
     var responsable: String
@@ -34,7 +31,7 @@ class Recipe: RecipeOrStep, ObservableObject {
     override func getSteps() -> [Step] {
         var steps : [Step] = []
         for r in listOfStep{
-            steps+=r.getSteps()
+            steps += r.getSteps()
         }
         return steps
     }
