@@ -53,8 +53,7 @@ class IntentIngredientList {
         self.state.send(.loaded(GlobalInformations.ingredients))
         self.state.send(.ready)
     }
-   
-    
+      
     func intentToCreate(ingredient: Ingredient) async {
    
         self.state.send(.adding)

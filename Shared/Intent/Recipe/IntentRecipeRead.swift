@@ -47,9 +47,4 @@ class IntentRecipeRead {
 
         self.state.send(.ready)
     }
-    
-    
-    
-    
- 
 }

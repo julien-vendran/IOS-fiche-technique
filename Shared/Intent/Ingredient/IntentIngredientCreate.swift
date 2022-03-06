@@ -17,8 +17,7 @@ enum IntentStateIngredientCreate: CustomStringConvertible {
     var description: String {
         switch self {
         case .ready:
-            return "state : .ready"
-            
+            return "state : .ready" 
         case .IngredientUpdated(_):
             return "state : .ingredientUpdated(Data)"
         case .cancelIngredient:
