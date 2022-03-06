@@ -46,6 +46,4 @@ struct DenreeReadDTO : Codable {
             step: nil,
             id: self.id)
     }
-    
- 
 }

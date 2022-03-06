@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//{"id":7,"name":"Plaque de feuilltage","unit":"Pièce","availableQuantity":150,"unitPrice":0.05,"associatedAllergen":[]}
 
 struct IngredientDTO : Codable{
     var id: Int?
@@ -15,7 +14,6 @@ struct IngredientDTO : Codable{
     var availableQuantity: Int
     var unitPrice: Double
     var associatedAllergen: [AllergenDTO]
-  //  var denreeUsed : [DenreeDTO]
     
     var ingredient : Ingredient {
         let allergen_list: [Allergen] = self.associatedAllergen.compactMap {
