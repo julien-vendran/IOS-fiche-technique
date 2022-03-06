@@ -42,11 +42,11 @@ class AllergenService {
         return output
     }
     
-    public static func saveallergen(_ ingr: Allergen) async {
+    public static func saveallergen(_ al: Allergen) async {
         if let url = URL(string: url_back){
             var request = URLRequest(url: url)
             request.addValue("application/json", forHTTPHeaderField:"Content-Type")
-            let dto = AllergenDTO(id_Allergen: ingr.id, allergen_name: ingr.name)
+            let dto = AllergenDTO(id_Allergen: al.id, allergen_name: al.name)
             request.httpMethod = "POST"
             do{
                 

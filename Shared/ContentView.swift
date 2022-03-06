@@ -17,6 +17,10 @@ struct ContentView: View {
         Group {
             if (ingredient && allergen && recipe && step) {
                 TabView {
+                    ListRecipe()
+                        .tabItem {
+                            Label("Recettes", systemImage: "pencil.slash")
+                        }
                     listIngredient()
                         .tabItem {
                             Label("Ingrédients", systemImage: "list.dash")
@@ -24,10 +28,6 @@ struct ContentView: View {
                     listAllergen()
                         .tabItem {
                             Label("Allergènes", systemImage: "square.and.pencil")
-                        }
-                    ListRecipe()
-                        .tabItem {
-                            Label("Recettes", systemImage: "pencil.slash")
                         }
                 }
             } else {

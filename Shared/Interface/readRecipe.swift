@@ -20,7 +20,7 @@ enum Informations_tab: String, CustomStringConvertible, CaseIterable, Identifiab
         case .description:
             return "Description"
         case .cout :
-            return "Cout"
+            return "Coûts"
         }
     }
 }
@@ -39,44 +39,30 @@ struct ReadRecipe: View {
     }
     var body: some View {
         VStack() {
-            Text("\(recipe.name)")
-                .font(.title)
-            if case currentTab = Informations_tab.cout{
-                Cout(cout: vm.cout)
-            }else{
-                List {
-                    ForEach((0..<self.vm.steps.count), id: \.self) { i in
-                        
-                        if case currentTab = Informations_tab.ingredient{
-                            ReadStep(step: self.vm.steps[i])
-                        }
-                        
-                        if case currentTab.id = Informations_tab.description{
-                            Section(header: Text(vm.steps[i].name)){
-                                Text("\(vm.steps[i].description)")
-                            }
-                        }
-                        
-                    }
-                }
-            }
-            HStack{
-             
             Picker("", selection: $currentTab) {
                 ForEach(Informations_tab.allCases) { info in
-                    Text(info.rawValue)
+                    Text(info.description)
                 }
             }
             .pickerStyle(.segmented)
-                
+            if case currentTab = Informations_tab.cout{
+                Cout(cout: vm.cout)
+            } else if case currentTab = Informations_tab.ingredient {
+                RecapIngredient(recipe: self.recipe)
+            } else {
+                List {
+                    ForEach((0..<self.vm.steps.count), id: \.self) { i in
+                        if case currentTab.id = Informations_tab.description{
+                            ReadStep(step: self.vm.steps[i], i: i)
+                        }
+                    }
+                }
             }
-            .frame(height: 40)
-            
-        
         }.task {
-           await intent.intentToLoad(idRecipe: recipe.id!)
+            await intent.intentToLoad(idRecipe: recipe.id!) //TODO: On en a encore besoin ?
         }
         .padding()
+        .navigationTitle("\(recipe.name)")
         
     }
 }

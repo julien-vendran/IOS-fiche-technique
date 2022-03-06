@@ -27,6 +27,7 @@
 		6F5ABC0827CA667D00B03138 /* IngredientListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABC0727CA667D00B03138 /* IngredientListVM.swift */; };
 		6F686C3F27D2566800CCF864 /* Cout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F686C3E27D2566800CCF864 /* Cout.swift */; };
 		6F686C4327D259DB00CCF864 /* CostDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F686C4227D259DB00CCF864 /* CostDTO.swift */; };
+		6F686C4527D4BE6D00CCF864 /* recapIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F686C4427D4BE6D00CCF864 /* recapIngredient.swift */; };
 		6F8E0E9327CD1F7100994BFD /* createDenree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9227CD1F7100994BFD /* createDenree.swift */; };
 		6F8E0E9527CD1FA600994BFD /* RecipeDenreeCreateVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */; };
 		6F8E0E9727CE44B200994BFD /* IntentRecipeRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8E0E9627CE44B200994BFD /* IntentRecipeRead.swift */; };
@@ -106,6 +107,7 @@
 		6F5ABC0727CA667D00B03138 /* IngredientListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListVM.swift; sourceTree = "<group>"; };
 		6F686C3E27D2566800CCF864 /* Cout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cout.swift; sourceTree = "<group>"; };
 		6F686C4227D259DB00CCF864 /* CostDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostDTO.swift; sourceTree = "<group>"; };
+		6F686C4427D4BE6D00CCF864 /* recapIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recapIngredient.swift; sourceTree = "<group>"; };
 		6F8E0E9227CD1F7100994BFD /* createDenree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createDenree.swift; sourceTree = "<group>"; };
 		6F8E0E9427CD1FA600994BFD /* RecipeDenreeCreateVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDenreeCreateVM.swift; sourceTree = "<group>"; };
 		6F8E0E9627CE44B200994BFD /* IntentRecipeRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentRecipeRead.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				6F3D383927BD5DEC008C36CD /* listIngredient.swift */,
 				6F3D384327BE54A1008C36CD /* readIngredient.swift */,
 				6F2B958827C4C6290091F706 /* createIngredient.swift */,
+				6F686C4427D4BE6D00CCF864 /* recapIngredient.swift */,
 			);
 			path = Ingredient;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				6F3D385027BE949B008C36CD /* IntentListIngredient.swift in Sources */,
 				6FC966FA27BC47CF006C33B4 /* recipe.swift in Sources */,
 				6FFC432727CAC9CD00915E90 /* DenreeService.swift in Sources */,
+				6F686C4527D4BE6D00CCF864 /* recapIngredient.swift in Sources */,
 				6F8E0EAA27CFD91200994BFD /* ReadStep.swift in Sources */,
 				6F3D384427BE54A1008C36CD /* readIngredient.swift in Sources */,
 				6F3D383A27BD5DEC008C36CD /* listIngredient.swift in Sources */,

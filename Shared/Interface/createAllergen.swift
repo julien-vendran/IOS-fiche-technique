@@ -8,21 +8,34 @@
 import SwiftUI
 
 struct createAllergen: View {
-    @State var allergen_created: Allergen
+    @State var name_allergen: String = ""
     
-    init () {
-        allergen_created = Allergen(id: nil, name: "")
-    }
+    @Environment(\.presentationMode) var presentationMode
+
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Nom: ")
-                .font(.headline)
-            TextField("", text: self.$allergen_created.name)
-                .padding(.all)
-                .background(Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0))
-
-        }.padding(.horizontal, 15)
+        Form {
+            Section(header: Text("Information générale")) {
+                Text("Nom: ")
+                TextField("Oeuf", text: self.$name_allergen)
+            }
+            .navigationTitle("Ajouter un allergène")
+            
+            Section(header: Text("Boutons")) {
+                Button("Ajouter allergène") {
+                    Task {
+                        let al: Allergen = Allergen(id: nil, name: self.name_allergen)
+                        await AllergenService.saveallergen(al)
+                        GlobalInformations.allergens.append(al)
+                    }
+                    presentationMode.wrappedValue.dismiss()
+                }
+                Button("Annuler la création") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .foregroundColor(.red)
+            }
+        }
     }
 }
 

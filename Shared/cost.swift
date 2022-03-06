@@ -38,6 +38,5 @@ class Cost {
         self.coutAssaisonnement = (coutAssaisonnement != nil) ? coutAssaisonnement! : Double(coutDesMatiere) * 0.05
         self.coutDesFluides = coutDesFluides
         self.coutDePersonnel = coutDePersonnel
-
     }
 }
