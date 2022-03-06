@@ -23,7 +23,15 @@ struct listIngredient: View {
                 List {
                     ForEach(0..<vm.count, id: \.self) { index in
                         NavigationLink(destination: ReadIngredient(ingredient: self.vm[index] , parent_intent: self.intent)) {
-                            Text("\(self.vm[index].name)")
+                            if (self.vm[index].availableQuantity > 0) {
+                                Text("\(self.vm[index].name)")
+                            } else if (self.vm[index].availableQuantity == 0) {
+                                Text("\(self.vm[index].name) - \(self.vm[index].availableQuantity) restant")
+                                    .foregroundColor(.yellow)
+                            } else {
+                                Text("\(self.vm[index].name) - \(-1 * self.vm[index].availableQuantity) manquants")
+                                    .foregroundColor(.red)
+                            }
                         }
                     }
                     .onDelete{ indexSet in
@@ -40,13 +48,16 @@ struct listIngredient: View {
                     }
                     
                 }
+                .refreshable {
+                    print("refresh")
+                    GlobalInformations.ingredients = await IngredientService.getAllIngredient()
+                    self.intent.intentToLoad()
+                }
             
             }
             .navigationTitle("Liste d'ingrédients")
-            .task {
-                if(self.vm.isEmpty) {
-                    self.intent.intentToLoad()
-                }
+            .onAppear() {
+                self.intent.intentToLoad()
             }
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {

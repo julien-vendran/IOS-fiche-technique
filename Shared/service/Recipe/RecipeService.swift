@@ -109,4 +109,14 @@ class RecipeService {
         }
     }
     
+    public static func sellRecipe(id: Int) async {
+        if let url_sell: URL = URL(string: "\(self.url_back)sellRecipe/\(id)") {
+            do {
+                let _ : [RecipeDTO] = try await URLSession.shared.getJSON(from: url_sell)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
 }

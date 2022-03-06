@@ -38,8 +38,6 @@ struct ContentView: View {
         }
         .task {
             GlobalInformations.ingredients = await IngredientService.getAllIngredient()
-            print("------------------------------")
-            print(GlobalInformations.ingredients[0].id)
             self.ingredient = true
         }
         .task {

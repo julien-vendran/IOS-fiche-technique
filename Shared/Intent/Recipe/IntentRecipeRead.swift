@@ -13,6 +13,7 @@ enum IntentStateRecipeRead: CustomStringConvertible {
     case loading
     case load
     case loaded(Cost)
+    case sold
     
 
     var description: String {
@@ -25,7 +26,8 @@ enum IntentStateRecipeRead: CustomStringConvertible {
             return "state : .load"
         case .loaded(_):
             return "state : .loaded(Data)"
-
+        case .sold:
+            return "state : .sold"
         }
     }
 }
@@ -45,6 +47,12 @@ class IntentRecipeRead {
             }
         }
 
+        self.state.send(.ready)
+    }
+    
+    func intentToSell(idRecipe: Int) async {
+        await RecipeService.sellRecipe(id: idRecipe)
+        self.state.send(.sold)
         self.state.send(.ready)
     }
 }

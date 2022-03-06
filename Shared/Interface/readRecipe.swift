@@ -33,14 +33,24 @@ struct ReadRecipe: View {
     
     var intent : IntentRecipeRead
 
+    @State var showAlertSell: Bool = false
+    
     init(recipe: Recipe){
         self.recipe = recipe
         self.vm = RecipeReadVM(step: recipe.getSteps())
         self.intent = IntentRecipeRead()
         self.intent.addObserver(viewModel: self.vm)
     }
+    
     var body: some View {
         VStack() {
+            Button("Vendre €") {
+                Task  {
+                    await self.intent.intentToSell(idRecipe: self.recipe.id!)
+                    self.showAlertSell = true
+                }
+            }
+            .foregroundColor(.green)
             Picker("", selection: $currentTab) {
                 ForEach(Informations_tab.allCases) { info in
                     Text(info.description)
@@ -65,7 +75,9 @@ struct ReadRecipe: View {
         }
         .padding()
         .navigationTitle("\(recipe.name)")
-        
+        .alert ("\(self.recipe.name) a été vendue !", isPresented: self.$showAlertSell) {
+            Button("OK", role: .cancel) {}
+        }
     }
 }
 

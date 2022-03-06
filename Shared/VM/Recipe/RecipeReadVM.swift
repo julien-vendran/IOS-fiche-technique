@@ -13,7 +13,7 @@ class RecipeReadVM : ObservableObject, Subscriber {
     
     @Published var steps : [Step]
     @Published var cout : Cost?
-
+    
     init(step: [Step]){
         self.steps = step
     }
@@ -43,6 +43,8 @@ class RecipeReadVM : ObservableObject, Subscriber {
             break
         case .loaded(let data): //On vient de recevoir nos nouvelles données
             cout = data
+        case .sold:
+            break
         }
         return .none
     }
