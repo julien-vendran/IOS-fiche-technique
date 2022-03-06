@@ -25,17 +25,12 @@ class RecipeService {
      Enregistre les steps en BD puis retourne une Recipe avec les id pour les Steps
      */
     static func saveStepsByRecipe(_ recipe: Recipe) async -> Recipe {
-        print("On commence à enregistrer les étapes depuis les recettes (on en a \(recipe.listOfStep.count))")
         let r: Recipe = recipe
         for i in 0..<recipe.listOfStep.count {
             if (recipe.listOfStep[i] is Step) { //C'est une étape donc on veut faire un traitement
-                print("On vient de trouver que notre truc est bien une étape")
                 let step_tmp: Step? = await StepService.createStep(step: recipe.listOfStep[i] as! Step)
                 if (step_tmp != nil) {
                     r.listOfStep[i] = step_tmp!
-                    r.listOfStep[i].id = step_tmp!.id
-                    let tmp: Int = r.listOfStep[i].id!
-                    print("Mise à jour de recipe.id (\(tmp)")
                 } else {
                     //Erreur d'ajout de step
                 }
@@ -45,15 +40,11 @@ class RecipeService {
     }
     
     static func getAllRecipe() async -> [Recipe] {
-        print("Début de la fonction getAllRecipe() de notre service")
         do {
             let decoded : [RecipeDTO] = try await URLSession.shared.getJSON(from: RecipeService.url!)
-            
-            print("Transformation de notre ingrédient")
             let list_recipe : [Recipe] = decoded.compactMap{ (dto: RecipeDTO) -> Recipe in
                 return dto.recipe
             }
-            print("On a fini de lire la liste")
             return list_recipe
             
         } catch let error {
@@ -78,27 +69,21 @@ class RecipeService {
     
     
     static func createRecipe(recipe: Recipe) async -> Recipe? {
-        print("--------------------------------------------------")
-        print("Début de la fonction createRecipe")
         if let url_back = self.url {
             var request = URLRequest(url: url_back)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
             
             let new_recipe: Recipe = await RecipeService.saveStepsByRecipe(recipe)
-            let tmp: Int = new_recipe.listOfStep[0].id!
-            print("Id qu'on enregistre après : \(tmp)")
             let recipe_dto: RecipeDTO = RecipeService.createRecipeDTO(new_recipe)
             
             do {
                 let encoded = try JSONEncoder().encode(recipe_dto)
                 let addedValue = try await URLSession.shared.upload(for: request, from: encoded)
                 let addedRecipe: RecipeDTO? = JSONHelpler.decode(data: addedValue.0)
-                print("--------------------------------------------------")
                 if (addedRecipe != nil) {
                     let recipe_created = addedRecipe!.recipe
                     recipe_created.listOfStep = new_recipe.listOfStep
-                   // return addedRecipe!.recipe
                     return recipe_created
                 } else {
                     return nil
@@ -117,7 +102,7 @@ class RecipeService {
             request.httpMethod="DELETE"
             do{
                 let _ = try await URLSession.shared.data(for: request)
-           
+                
             }catch let error{
                 print(error.localizedDescription)
             }

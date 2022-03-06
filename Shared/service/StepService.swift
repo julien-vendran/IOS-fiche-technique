@@ -17,11 +17,9 @@ class StepService {
         do{
             if let url = URL(string: url_back+"\(id)"){
                 let decoded : StepDTO = try await URLSession.shared.getJSON(from: url)
-                //Pour chaque element dto on converti, compactMap =map mais plus simple
                 output = decoded.step
-                
             }
-        }catch let error{
+        } catch let error{
             print(error.localizedDescription)
         }
         return output
@@ -31,14 +29,12 @@ class StepService {
         do{
             if let url = URL(string: url_back){
                 let decoded : [StepDTO] = try await URLSession.shared.getJSON(from: url)
-                //Pour chaque element dto on converti, compactMap =map mais plus simple
                 output = decoded.compactMap{ (dto: StepDTO) -> Step in
                     return dto.step
                 }
-     
             }
-        }catch let error{
-
+        } catch let error{
+            
             print(error.localizedDescription)
         }
         return output
@@ -59,12 +55,11 @@ class StepService {
      Enregistre les denrées en base de données, met à jour le tableau de denrées et de nos steps puis va retourner notre step mise à jour
      */
     static func saveDenreeFromStep(_ step: Step) async -> Step {
-        print("On commence la sauvegarde de denrée")
         let s: Step = step
         for i: Int in 0..<step.denreeUsed.count { //Pour chaque denrée
             //On l'enregistre en BD
             let denree_tmp: Denree? = await DenreeService.createDenree(step.denreeUsed[i])
-
+            
             if (denree_tmp != nil) { //Si l'enregistrement s'est bien passé
                 s.denreeUsed[i] = denree_tmp!
                 s.denreeUsed[i].id = denree_tmp!.id //On met à jour l'id de notre denrée pour notre step
@@ -76,7 +71,6 @@ class StepService {
     }
     
     static func createStep(step: Step) async -> Step? {
-        print("On commence à créer l'étape \(step.name)")
         if let url_back = self.url {
             var request = URLRequest(url: url_back)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -84,9 +78,6 @@ class StepService {
             
             //D'abord, on enregistre nos denrées en BD
             let new_Step: Step = await StepService.saveDenreeFromStep(step)
-            if new_Step.denreeUsed.count>0{
-                print("New denree : \(new_Step.denreeUsed[0].ingredient)")
-            }
             let step_dto: StepDTO = StepService.createStepDTO(new_Step)
             
             do {
@@ -94,15 +85,13 @@ class StepService {
                 let addedValue = try await URLSession.shared.upload(for: request, from: encoded)
                 let addedStep: StepDTO? = JSONHelpler.decode(data: addedValue.0)
                 if (addedStep != nil) {
-                    print("On retourne notre étape sans erreur")
                     let step_created = addedStep!.step
                     step_created.denreeUsed = new_Step.denreeUsed
-                    //return addedStep!.step
                     return step_created
                 } else {
                     return nil
                 }
-
+                
             } catch let error {
                 print(error)
             }

@@ -16,7 +16,6 @@ class IngredientService {
         do{
             if let url = URL(string: url_back+"\(id)"){
                 let decoded : IngredientDTO = try await URLSession.shared.getJSON(from: url)
-                //Pour chaque element dto on converti, compactMap =map mais plus simple
                 output = decoded.ingredient
                 
             }
@@ -31,14 +30,11 @@ class IngredientService {
         do{
             if let url = URL(string: url_back){
                 let decoded : [IngredientDTO] = try await URLSession.shared.getJSON(from: url)
-                //Pour chaque element dto on converti, compactMap =map mais plus simple
                 output = decoded.compactMap{ (dto: IngredientDTO) -> Ingredient in
                     return dto.ingredient
                 }
-     
             }
-        }catch let error{
-
+        } catch let error {
             print(error.localizedDescription)
         }
         return output
@@ -77,7 +73,6 @@ class IngredientService {
             request.httpMethod="DELETE"
             do{
                 let _ = try await URLSession.shared.data(for: request)
-                print("ingredientService : \(id) supprimé")
             }catch let error{
                 print(error.localizedDescription)
             }

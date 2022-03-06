@@ -24,7 +24,7 @@ class DenreeService {
             }
         }catch let error{
             print(error)
-         
+            
         }
         return output
     }
@@ -57,7 +57,7 @@ class DenreeService {
                 } else {
                     return nil
                 }
-
+                
             } catch let error {
                 print(error)
             }
