@@ -11,7 +11,7 @@ import Combine
 class RecipeListeVM: ObservableObject, Subscriber {
     
     @Published var associated_recipe_list: [Recipe]
-    @Published var step_list : [Step] //TODO a voir où le mettre plus tard
+    @Published var step_list : [Step]
     var count: Int {
         return self.associated_recipe_list.count
     }
@@ -42,7 +42,6 @@ class RecipeListeVM: ObservableObject, Subscriber {
         return self.associated_recipe_list[index]
     }
     
-    //Activé à chaque send -> Cette partie est utilisée pour la gestion des états de la page (State)
     typealias Input = IntentStateRecipeList
     
     typealias Failure = Never
@@ -55,7 +54,7 @@ class RecipeListeVM: ObservableObject, Subscriber {
         return
     }
     
-    func receive (_ input: IntentStateRecipeList) -> Subscribers.Demand {
+    func receive (_ input: Input) -> Subscribers.Demand {
         print("RecipeListVM -> intent \(input)")
         
         switch input {
@@ -68,10 +67,10 @@ class RecipeListeVM: ObservableObject, Subscriber {
             break
         case .loaded(let data): //On vient de recevoir nos nouvelles données
             self.associated_recipe_list = data
-            print("On vient d'affecter nos données")
-            print(self.associated_recipe_list)
+
         case .adding: //on est en cours d'ajout
             break
+
         case .added(let recipe):
             if (recipe != nil) {
                 print(recipe!)
@@ -82,7 +81,7 @@ class RecipeListeVM: ObservableObject, Subscriber {
             }
         case .loadedStep(let data):
             self.step_list = data
-            if (step_list.isEmpty==false && associated_recipe_list.isEmpty==false){
+            if (step_list.isEmpty==false && associated_recipe_list.isEmpty==false) {
                 buildRecipe()
                 print(associated_recipe_list[0].listOfStep)
             }
@@ -98,29 +97,25 @@ class RecipeListeVM: ObservableObject, Subscriber {
         if let recipe = findRecipe(id: id){
             return recipe
         }
-        if let step = findStep(id: id){
+        else if let step = findStep(id: id){
             return step
         }
-        
-        print("PROBLEME FIND RECIP")
         return nil
-        
     }
     
     private func findRecipe(id: Int) -> Recipe?{
         
-        for r in associated_recipe_list{
-            if r.id==id {
+        for r in associated_recipe_list {
+            if r.id == id {
                 return r
             }
         }
-        
         return nil
     }
     
     private func findStep(id: Int) -> Step?{
         for s in step_list {
-            if s.id==id{
+            if s.id == id {
                 return s
             }
         }

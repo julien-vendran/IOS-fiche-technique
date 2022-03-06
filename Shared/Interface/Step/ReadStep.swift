@@ -9,21 +9,19 @@ import SwiftUI
 
 struct ReadStep: View {
     
-    @ObservedObject var vm : StepReadVM
-    private var intent: IntentStepRead
+
+    private var step: Step
     private var cols = [GridItem](repeating:.init(.flexible()),count:3)
     private let i: Int
   
     init(step: Step, i: Int) {
-        self.vm = StepReadVM(step: step)
-        self.intent = IntentStepRead()
+        self.step = step
         self.i = i + 1
-        self.intent.addObserver(viewModel: self.vm)
     }
     var body: some View {
-        Section(header: Text("Étape \(i): \(vm.step.name) - \(Int(vm.step.duration)) minutes")){
-            ReadDenree(denrees: vm.step.denreeUsed)
-            Text(self.vm.step.description)
+        Section(header: Text("Étape \(i): \(step.name) - \(Int(step.duration)) minutes")){
+            ReadDenree(denrees: step.denreeUsed)
+            Text(self.step.description)
         }
     }
 }

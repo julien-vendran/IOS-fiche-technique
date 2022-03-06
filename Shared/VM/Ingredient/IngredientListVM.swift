@@ -28,7 +28,7 @@ class IngredientListVM : ObservableObject, Subscriber {
         return self.ingredient_list[index]
     }
     
-    func remove(atOffsets: IndexSet) -> [Ingredient]{
+    func remove(atOffsets: IndexSet) -> [Ingredient] {
         var output : [Ingredient] = []
         for i in atOffsets.makeIterator() {
             output.append(ingredient_list[i])
@@ -53,7 +53,7 @@ class IngredientListVM : ObservableObject, Subscriber {
         return
     }
     
-    func receive (_ input: IntentStateIngredientList) -> Subscribers.Demand {
+    func receive (_ input: Input) -> Subscribers.Demand {
         print("IngredientListVM -> intent \(input)")
         
         switch input {
@@ -69,8 +69,8 @@ class IngredientListVM : ObservableObject, Subscriber {
             break
         case .added(let ingredient):
             if (ingredient != nil) {
-                print(ingredient!)
                 self.ingredient_list.append(ingredient!)
+                GlobalInformations.ingredients.append(ingredient!)
             } else { //Erreur dans l'ajout de notre ingredient
                 print("Erreur dans la création de l'ingredient'")
             }

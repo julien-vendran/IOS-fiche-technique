@@ -27,7 +27,7 @@ struct listIngredient: View {
                             Text("\(self.vm[index].name)")
                         }
                     }
-                    .onDelete{indexSet in
+                    .onDelete{ indexSet in
                         let toRemove = vm.remove(atOffsets: indexSet)
                         Task{
                             for ingre in toRemove{

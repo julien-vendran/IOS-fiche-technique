@@ -10,7 +10,6 @@ import Combine
 
 enum IntentStateIngredientCreate: CustomStringConvertible {
     case ready
-    case IngredientCreated(Ingredient?)
     case IngredientUpdated(Ingredient?)
     case cancelIngredient
     
@@ -20,8 +19,6 @@ enum IntentStateIngredientCreate: CustomStringConvertible {
         case .ready:
             return "state : .ready"
             
-        case .IngredientCreated(_) :
-            return "state : .ingredientCreated(Data)"
         case .IngredientUpdated(_):
             return "state : .ingredientUpdated(Data)"
         case .cancelIngredient:
@@ -35,18 +32,6 @@ class IntentIngredientCreate {
     
     func addObserver (viewModel: IngredientCreateVM) {
         self.state.subscribe(viewModel)
-    }
-    
-    //Jamais appele car utilisé dans IntetentIngList pour cree
-    func intentToCreate(ingredient: Ingredient) async {
-        //print(state)
-        
-        let ig: Ingredient? = await IngredientService.saveIngredient(ingredient)
-        DispatchQueue.main.async {
-            self.state.send(.IngredientCreated(ig))
-        }
-        
-        self.state.send(.ready)
     }
     
     func intentToUpdate(_ ingredient: Ingredient) async {

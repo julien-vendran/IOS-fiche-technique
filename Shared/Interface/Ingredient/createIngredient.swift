@@ -106,6 +106,7 @@ struct CreateIngredient: View {
             allergen = [self.list_Allergen[selectedAllergen]]
         }
         let ig: Ingredient = self.vm.getStateIngredient(list_allergen: allergen)
+        
         if (self.updateMode) {
             Task {
                 await intent.intentToUpdate(ig)
